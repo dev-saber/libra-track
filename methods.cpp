@@ -1,6 +1,10 @@
-#include "../classes/storage.h"
-// #include "../classes/book.h"
+#include "classes.h"
 #include <algorithm>
+#include "utils.cpp"
+// Book class
+book::book(int id, string ti, string auth, int ac, bool sell) : ID(id), title(ti), author(auth), available_copies(ac), is_sellable(sell){};
+
+// Storage class
 ostream &operator<<(ostream &o, book &b)
 {
     o << "Book ID: " << b.ID << endl;
@@ -28,16 +32,15 @@ void storage::add_book(book &b)
 
 void storage::show(int ID)
 {
-    auto it = find_if(books.begin(), books.end(), [ID](const book &obj)
-                      { return obj.ID == ID; });
-    if (it != books.end())
+    
+    auto foundBook1 = find(books, ID);
+    if (foundBook1.has_value())
     {
-        book &foundObject = *it;
-        cout << foundObject << endl;
+        cout <<  foundBook1.value() << endl;
     }
     else
     {
-        cout << "Object with id = " << ID << " not found." << endl;
+        cout << "Book not found." << endl;
     }
 }
 
