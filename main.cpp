@@ -2,6 +2,7 @@
 #include "methods/book.cpp"
 #include "methods/storage.cpp"
 
+
 using namespace std;
 
 int main()
@@ -14,6 +15,9 @@ int main()
     s.add_book(b2);
 
     s.all_books();
+    s.show(2);
+
+
 
     return 0;
 }
