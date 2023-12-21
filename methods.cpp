@@ -13,14 +13,10 @@ ostream &operator<<(ostream &o, book &b)
     o << "Author: " << b.author << endl;
     o << "Available copies: " << b.available_copies << endl;
 
-    if (b.is_sellable)
-    {
-        o << "Availability: Sellable\n";
-    }
-    else
-    {
-        o << "Availability: Borrowable\n";
-    }
+    
+   
+        o << "Availability: " << check_Item_status(b.is_sellable);
+   
 
     return o;
 }
@@ -66,11 +62,11 @@ void storage::update_book(int ID)
         cout << "-----------------------------------------------------" << endl;
         cout << "Update title  (" << found_Book.value().title << ") : ";
         getline(cin, title_inp);
-        cout << "Update author (" << found_Book.value().author << ") : " << endl;
+        cout << "Update author (" << found_Book.value().author << ") : ";
         getline(cin, author_inp);
-        cout << "Update available copies value ( " << found_Book.value().available_copies << ") : " << endl;
+        cout << "Update available copies value ( " << found_Book.value().available_copies << ") : ";
         getline(cin, a_copies_inp);
-        cout << "Update sellable status (" << found_Book.value().is_sellable << ") : " << endl;
+        cout << "Change book status ( from " << check_Item_status(found_Book.value().is_sellable) << " to " <<  check_Item_status(!found_Book.value().is_sellable) <<" )   (yes/no): ";
         getline(cin, is_sellable_inp);
         cout << "-----------------------------------------------------" << endl;
 
@@ -81,7 +77,8 @@ void storage::update_book(int ID)
                 book.title = title_inp.empty() ? found_Book->title : title_inp;
                 book.author = author_inp.empty() ? found_Book->author : author_inp;
                 book.available_copies = a_copies_inp.empty() ? found_Book->available_copies : stoi(a_copies_inp);
-                book.is_sellable = is_sellable_inp.empty() ? found_Book->is_sellable : is_confirmed(is_sellable_inp);
+                bool check = is_sellable_inp == "yes" ? !found_Book->is_sellable : found_Book->is_sellable;
+                book.is_sellable = is_sellable_inp.empty() ? found_Book->is_sellable : check;
             }
         }
 

@@ -31,6 +31,8 @@ int main()
     // s.all_books();
     s.show(111);
     s.show(1);
+    s.show(2);
+    s.show(3);
 
     s.update_book(1);
     s.update_book(111);

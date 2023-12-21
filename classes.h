@@ -25,7 +25,7 @@ public:
 };
 class storage
 {
-    friend bool is_confirmed(string);
+    friend string check_Item_status(bool);
 
 private:
     vector<book> books;

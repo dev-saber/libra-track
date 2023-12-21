@@ -19,7 +19,7 @@ optional<V> find(vector<V> vector, I ID)
     }
 };
 
-bool is_confirmed(string choice){
-    return "yes" ? true : false;
+string check_Item_status(bool choice){
+    return choice  ? "sellable" : "borrowable" ;
 }
 
