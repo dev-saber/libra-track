@@ -58,17 +58,18 @@ void storage::update_book(int ID)
     {
         string title_inp, author_inp, a_copies_inp, is_sellable_inp;
 
-        cout << "if u dont wanna change the attribute value press enter only" << endl;
+        cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
         cout << "Update title  (" << found_Book.value().title << ") : ";
         getline(cin, title_inp);
         cout << "Update author (" << found_Book.value().author << ") : ";
         getline(cin, author_inp);
-        cout << "Update available copies value ( " << found_Book.value().available_copies << ") : ";
+        cout << "Update available copies ( " << found_Book.value().available_copies << ") : ";
         getline(cin, a_copies_inp);
-        cout << "Change book status ( from " << check_Item_status(found_Book.value().is_sellable) << " to " <<  check_Item_status(!found_Book.value().is_sellable) <<" )   (yes/no): ";
+        cout << "Change book status ( from " << check_Item_status(found_Book.value().is_sellable) << " to " << check_Item_status(!found_Book.value().is_sellable) << ")   (yes/no): ";
         getline(cin, is_sellable_inp);
         cout << "-----------------------------------------------------" << endl;
+
 
         for (book &book : books)
         {
