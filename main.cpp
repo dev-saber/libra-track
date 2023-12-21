@@ -29,8 +29,14 @@ int main()
     s.add_book(b11);
 
     // s.all_books();
-    s.show(1);
     s.show(111);
+    s.show(1);
+
+    s.update_book(1);
+    s.update_book(111);
+    
+
+
     // optional<book> foundBook1 = s.find(2);
     // if (foundBook1.has_value()) {
     //     cout << "Book found: " << foundBook1.value() << endl;
@@ -43,8 +49,6 @@ int main()
     //     cout << "Book found: " << foundBook1.value() << endl;
     // } else {
     //     cout << "Book not found." << endl;}
-
-
 
     return 0;
 }
