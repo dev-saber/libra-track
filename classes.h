@@ -14,6 +14,9 @@ class book
     template <class V, class I>
     friend optional<V> find(vector<V>, I);
 
+    template <class V, class I>
+    friend void remove_elements_by_id(vector<V>&, I);
+
 private:
     int ID;
     string title;
@@ -29,9 +32,9 @@ public:
 class storage
 {
     friend string check_Item_status(bool);
+    template <class V, class I>
+    friend void remove_elements_by_id(vector<V>&, I);
 
-    // template <class C>
-    // friend int get_element_position(vector<C>, C);
 
 private:
     vector<book> books;

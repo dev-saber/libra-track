@@ -127,9 +127,8 @@ void storage::delete_book(int ID){
     auto found_Book = find(books, ID);
 
     if (found_Book.has_value()){
-       books.erase(remove_if(books.begin(), books.end(),
-                                  [ID](const book &obj) { return obj.ID == ID; }),
-                   books.end());
+   
+        remove_elements_by_id(books,ID);
 
     }
 }

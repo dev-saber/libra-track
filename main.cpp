@@ -36,9 +36,11 @@ int main()
     // s.all_books();
 
     // s.add_book();
-    s.all_books();
+    // s.all_books();
 
-    s.delete_book(1);
+    s.delete_book(10);
+    s.delete_book(9);
+    s.delete_book(11);
     s.all_books();
     // s.update_book(111);
     

@@ -10,7 +10,7 @@ optional<V> find(vector<V> vector, I ID)
                       { return obj.ID == ID; });
     if (it != vector.end())
     {
-        
+
         return *it;
     }
     else
@@ -19,18 +19,16 @@ optional<V> find(vector<V> vector, I ID)
     }
 };
 
-string check_Item_status(bool choice){
-    return choice  ? "sellable" : "borrowable" ;
+string check_Item_status(bool choice)
+{
+    return choice ? "sellable" : "borrowable";
 }
 
-// template <class C>
-// int get_element_position(vector<C> v, C to_delete){
-//     for (int i = 0; i < v.size(); i++)
-//     {
-//         if (v[i].ID == to_delete.ID)
-//         {
-//             return i;
-//         }
-        
-//     }
-// };
+template <class V, class I>
+void remove_elements_by_id(vector<V>& vector, I ID)
+{
+    vector.erase(remove_if(vector.begin(), vector.end(),
+                           [ID](const V &obj)
+                           { return obj.ID == ID; }),
+                 vector.end());
+};
