@@ -39,18 +39,7 @@ int main()
     
 
 
-    // optional<book> foundBook1 = s.find(2);
-    // if (foundBook1.has_value()) {
-    //     cout << "Book found: " << foundBook1.value() << endl;
-    // } else {
-    //     cout << "Book not found." << endl;
-    // }
-
-    // optional<book> foundBook2= s.find(111);
-    // if (foundBook2.has_value()) {
-    //     cout << "Book found: " << foundBook1.value() << endl;
-    // } else {
-    //     cout << "Book not found." << endl;}
+    
 
     return 0;
 }
