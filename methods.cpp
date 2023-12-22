@@ -3,7 +3,9 @@
 #include "utils.cpp"
 
 // Book class
+int storage::id_generator=0;
 book::book(int id, string ti, string auth, int ac, bool sell) : ID(id), title(ti), author(auth), available_copies(ac), is_sellable(sell){};
+book::book(): ID(0), title(""), author(""), available_copies(0), is_sellable(false){};
 
 // Storage class
 ostream &operator<<(ostream &o, book &b)
@@ -13,18 +15,42 @@ ostream &operator<<(ostream &o, book &b)
     o << "Author: " << b.author << endl;
     o << "Available copies: " << b.available_copies << endl;
 
-    
-   
-        o << "Availability: " << check_Item_status(b.is_sellable);
-   
+    o << "Availability: " << check_Item_status(b.is_sellable);
 
     return o;
 }
 
 void storage::add_book(book &b)
 {
+    books.push_back(b);
+}
+
+void storage::add_book()
+{
+    book b;
+    string bool_input;
+
+    cout << "Enter a title book : ";
+    getline(cin >> ws, b.title) ;
+    cout << "Enter the book's author : " ;
+    getline(cin, b.author) ;
+    cout << "How many available copies : " ;
+    cin >> b.available_copies;
+
+    do
+    {
+        cout << "Is the book sellable (yes / no) : " ;
+        cin >> bool_input;
+        cin.ignore();
+    } while (bool_input != "yes" && bool_input != "no");
+    
+    b.is_sellable="yes" ? true : false;
+    b.ID=id_generator;
 
     books.push_back(b);
+    id_generator++;
+
+    // add later an if statement wether we add a new book or not (the fct calls itself)
 }
 
 void storage::show(int ID)
@@ -43,10 +69,21 @@ void storage::show(int ID)
 
 void storage::all_books()
 {
-    for (book b : books)
+    cout << "=== All Books in Storage ===\n";
+
+    if (books.empty())
     {
-        cout << b << endl;
+        cout << "No books found in the storage.\n";
     }
+    else
+    {
+        for ( book& b : books)
+        {
+            cout << b << "\n \n";
+        }
+    }
+
+    cout << "===========================\n";
 }
 
 void storage::update_book(int ID)
@@ -70,7 +107,6 @@ void storage::update_book(int ID)
         getline(cin, is_sellable_inp);
         cout << "-----------------------------------------------------" << endl;
 
-
         for (book &book : books)
         {
             if (book.ID == ID)
@@ -84,5 +120,16 @@ void storage::update_book(int ID)
         }
 
         this->show(ID);
+    }
+}
+
+void storage::delete_book(int ID){
+    auto found_Book = find(books, ID);
+
+    if (found_Book.has_value()){
+       books.erase(remove_if(books.begin(), books.end(),
+                                  [ID](const book &obj) { return obj.ID == ID; }),
+                   books.end());
+
     }
 }

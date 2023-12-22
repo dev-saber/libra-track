@@ -27,15 +27,20 @@ int main()
     s.add_book(b9);
     s.add_book(b10);
     s.add_book(b11);
+    // s.add_book();
 
+    // s.show(111);
+    // s.show(1);
+    // s.show(2);
+    // s.show(3);
     // s.all_books();
-    s.show(111);
-    s.show(1);
-    s.show(2);
-    s.show(3);
 
-    s.update_book(1);
-    s.update_book(111);
+    // s.add_book();
+    s.all_books();
+
+    s.delete_book(1);
+    s.all_books();
+    // s.update_book(111);
     
 
 

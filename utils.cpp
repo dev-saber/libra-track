@@ -23,3 +23,14 @@ string check_Item_status(bool choice){
     return choice  ? "sellable" : "borrowable" ;
 }
 
+// template <class C>
+// int get_element_position(vector<C> v, C to_delete){
+//     for (int i = 0; i < v.size(); i++)
+//     {
+//         if (v[i].ID == to_delete.ID)
+//         {
+//             return i;
+//         }
+        
+//     }
+// };
