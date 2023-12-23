@@ -47,6 +47,5 @@ public:
     void delete_book(int);
     void all_books();
     void show(int);
-
-    bool is_available(int);
+    void search();
 };

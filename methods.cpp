@@ -3,9 +3,9 @@
 #include "utils.cpp"
 
 // Book class
-int storage::id_generator=0;
+int storage::id_generator = 0;
 book::book(int id, string ti, string auth, int ac, bool sell) : ID(id), title(ti), author(auth), available_copies(ac), is_sellable(sell){};
-book::book(): ID(0), title(""), author(""), available_copies(0), is_sellable(false){};
+book::book() : ID(0), title(""), author(""), available_copies(0), is_sellable(false){};
 
 // Storage class
 ostream &operator<<(ostream &o, book &b)
@@ -31,21 +31,21 @@ void storage::add_book()
     string bool_input;
 
     cout << "Enter a title book : ";
-    getline(cin >> ws, b.title) ;
-    cout << "Enter the book's author : " ;
-    getline(cin, b.author) ;
-    cout << "How many available copies : " ;
+    getline(cin >> ws, b.title);
+    cout << "Enter the book's author : ";
+    getline(cin, b.author);
+    cout << "How many available copies : ";
     cin >> b.available_copies;
 
     do
     {
-        cout << "Is the book sellable (yes / no) : " ;
+        cout << "Is the book sellable (yes / no) : ";
         cin >> bool_input;
         cin.ignore();
     } while (bool_input != "yes" && bool_input != "no");
-    
-    b.is_sellable="yes" ? true : false;
-    b.ID=id_generator;
+
+    b.is_sellable = "yes" ? true : false;
+    b.ID = id_generator;
 
     books.push_back(b);
     id_generator++;
@@ -77,7 +77,7 @@ void storage::all_books()
     }
     else
     {
-        for ( book& b : books)
+        for (book &b : books)
         {
             cout << b << "\n \n";
         }
@@ -123,12 +123,61 @@ void storage::update_book(int ID)
     }
 }
 
-void storage::delete_book(int ID){
+void storage::delete_book(int ID)
+{
     auto found_Book = find(books, ID);
 
-    if (found_Book.has_value()){
-   
-        remove_elements_by_id(books,ID);
+    if (found_Book.has_value())
+    {
 
+        remove_elements_by_id(books, ID);
     }
+}
+
+void storage::search()
+{
+    string author, title, is_sellable_inp;
+    bool is_sellable;
+    do
+    {
+        cout << "Enter the title : " << endl;
+        getline(cin >> ws, title);
+        cout << "Enter the author : " << endl;
+        getline(cin >> ws, author);
+        cout << "Is the book for sell (yes/no) : " << endl;
+        getline(cin >> ws, is_sellable_inp);        
+    } while (author.empty() && title.empty() && is_sellable_inp.empty());
+
+    if (is_sellable_inp == "yes")
+    {
+        is_sellable = true;
+    } else
+    {
+        is_sellable = false;
+    }
+    
+    book* it;
+    if (!author.empty() && !title.empty())
+    {
+        auto it = find_if(books.begin(), books.end(), [title, author](const book &obj)
+    { return obj.title.find(title) != std::string::npos   && obj.author == author; });
+    }
+
+    if (author.empty() && !title.empty())
+    {
+        it = find_if(books.begin(), books.end(), [title](const book &obj)
+    { return obj.title == title; });
+    }
+    
+    if (!author.empty() && title.empty())
+    {
+        it = find_if(books.begin(), books.end(), [author](const book &obj)
+    { return obj.author == author; });
+    }
+    // return *it;
+
+    // 1- get the author and / or title
+    // 2- get the category (sellable / borrowble)
+    // 3- available copies > 0
+    
 }
