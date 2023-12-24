@@ -45,7 +45,6 @@ int main()
     // s.update_book(111);
 
     // s.search();
-        cout << bool(NULL);
     // cout << regex_search_pattern("meryem","mer");
 
 

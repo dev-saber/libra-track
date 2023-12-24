@@ -134,69 +134,69 @@ void storage::delete_book(int ID)
     }
 }
 
-void storage::search()
-{
-    string author, title, is_sellable_inp;
-    bool is_sellable;
-    do
-    {
-        cout << "Enter the title : " << endl;
-        getline(cin, title);
-        cout << "Enter the author : " << endl;
-        getline(cin, author);
-        cout << "Is the book for sell (yes/no) : " << endl;
-        getline(cin, is_sellable_inp);
+// void storage::search()
+// {
+//     string author, title, is_sellable_inp;
+//     bool is_sellable;
+//     do
+//     {
+//         cout << "Enter the title : " << endl;
+//         getline(cin, title);
+//         cout << "Enter the author : " << endl;
+//         getline(cin, author);
+//         cout << "Is the book for sell (yes/no) : " << endl;
+//         getline(cin, is_sellable_inp);
 
-        title = title.empty() ? "" : title;
-        author = author.empty() ? "" : author;
-        // is_sellable_inp = is_sellable_inp.empty() ? "yes" : is_sellable_inp;
-        if (is_sellable_inp.empty())
-        {
-            is_sellable_inp = "no choice";
-        }
+//         title = title.empty() ? "" : title;
+//         author = author.empty() ? "" : author;
+//         // is_sellable_inp = is_sellable_inp.empty() ? "yes" : is_sellable_inp;
+//         if (is_sellable_inp.empty())
+//         {
+//             is_sellable_inp = "no choice";
+//         }
         
-    } while (author == "" && title == "");
+//     } while (author == "" && title == "");
 
-    if (is_sellable_inp != "no choice")
-    {
-        is_sellable = is_sellable_inp == "yes" ? true : false;
-    }
-    bool added_condition = is_sellable_inp != "no choice" && is_sellable;
+//     if (is_sellable_inp != "no choice")
+//     {
+//         is_sellable = is_sellable_inp == "yes" ? true : false;
+//     }
+//     bool added_condition = is_sellable_inp != "no choice" && is_sellable;
 
-    for (auto book : books)
-    {
-        if (!author.empty() && !title.empty())
-        {
-            if (regex_search_pattern(book.title, title) && regex_search_pattern(book.author, author) )
-            {
+//     for (auto book : books)
+//     {
+//         if (!author.empty() && !title.empty())
+//         {
+//             if (regex_search_pattern(book.title, title) && regex_search_pattern(book.author, author) )
+//             {
 
-                cout << "======================" << endl;
-                cout << book << endl;
-                cout << "======================" << endl;
-            }
-        }
+//                 cout << "======================" << endl;
+//                 cout << book << endl;
+//                 cout << "======================" << endl;
+//             }
+//         }
 
-        else if (author.empty() && !title.empty())
-        {
-            if (regex_search_pattern(book.title, title) && (book.is_sellable == added_condition))
-            {
-                cout << "======================" << endl;
-                cout << book << endl;
-                cout << "======================" << endl;
-            }
-        }
-        else if (!author.empty() && title.empty())
-        {
-            if (regex_search_pattern(book.author, author)&& (book.is_sellable == added_condition))
-            {
-                cout << "======================" << endl;
-                cout << book << endl;
-                cout << "======================" << endl;
-            }
-        }
-    }
+//         else if (author.empty() && !title.empty())
+//         {
+//             if (regex_search_pattern(book.title, title) && (book.is_sellable == added_condition))
+//             {
+//                 cout << "======================" << endl;
+//                 cout << book << endl;
+//                 cout << "======================" << endl;
+//             }
+//         }
+//         else if (!author.empty() && title.empty())
+//         {
+//             if (regex_search_pattern(book.author, author)&& (book.is_sellable == added_condition))
+//             {
+//                 cout << "======================" << endl;
+//                 cout << book << endl;
+//                 cout << "======================" << endl;
+//             }
+//         }
+//     }
 
-    // 1- get the author and / or title
-    // 2- get the category (sellable / borrowble)
-    // 3- available copies > 0
-}
+//     // 1- get the author and / or title
+//     // 2- get the category (sellable / borrowble)
+//     // 3- available copies > 0
+// }
