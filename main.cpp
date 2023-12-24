@@ -29,8 +29,8 @@ int main()
     // s.add_book(b11);
     // s.add_book();
 
-    s.show_book(111);
-    s.show_book(1);
+    // s.show_book(111);
+    // s.show_book(1);
     // s.show(2);
     // s.show(3);
     // s.all_books();
@@ -47,13 +47,15 @@ int main()
     // s.search();
     // cout << regex_search_pattern("meryem","mer");
 
-    s.add_subs();
-    s.add_subs();
+    s.add_sub();
+    s.add_sub();
     // s.all_subs();
 
-    s.show_sub(1);
-    
-    
+    s.all_subs();
+    // s.update_sub(1);
+    // s.update_sub(2);
+    s.delete_sub(1);  
+    s.all_subs();  
 
     return 0;
 }

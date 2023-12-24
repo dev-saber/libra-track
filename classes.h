@@ -32,11 +32,12 @@ public:
 class subscription
 {
 
-
- template <class V, class I>
+    template <class V, class I>
     friend optional<V> find(vector<V>, I);
     friend class storage;
     friend ostream &operator<<(ostream &, subscription &);
+    template <class V, class I>
+    friend void remove_elements_by_id(vector<V> &, I);
 
 private:
     int ID;
@@ -51,11 +52,7 @@ public:
 
 class storage
 {
-    
-   
     friend string check_Item_status(bool);
-    template <class V, class I>
-    friend void remove_elements_by_id(vector<V> &, I);
     friend bool regex_search_pattern(string, string);
 
 private:
@@ -76,6 +73,8 @@ public:
     void all_subs();
     void show_sub(int);
 
-    void add_subs(subscription &);
-    void add_subs();
+    void add_sub(subscription &);
+    void add_sub();
+    void update_sub(int);
+    void delete_sub(int);
 };

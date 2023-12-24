@@ -91,21 +91,21 @@ void storage::all_books()
 void storage::update_book(int ID)
 {
     this->show_book(ID);
-    auto found_Book = find(books, ID);
+    auto found_book = find(books, ID);
 
-    if (found_Book.has_value())
+    if (found_book.has_value())
     {
         string title_inp, author_inp, a_copies_inp, is_sellable_inp;
 
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
-        cout << "Update title  (" << found_Book.value().title << ") : ";
+        cout << "Update title  (" << found_book.value().title << ") : ";
         getline(cin, title_inp);
-        cout << "Update author (" << found_Book.value().author << ") : ";
+        cout << "Update author (" << found_book.value().author << ") : ";
         getline(cin, author_inp);
-        cout << "Update available copies ( " << found_Book.value().available_copies << ") : ";
+        cout << "Update available copies ( " << found_book.value().available_copies << ") : ";
         getline(cin, a_copies_inp);
-        cout << "Change book status ( from " << check_Item_status(found_Book.value().is_sellable) << " to " << check_Item_status(!found_Book.value().is_sellable) << ")   (yes/no): ";
+        cout << "Change book status ( from " << check_Item_status(found_book.value().is_sellable) << " to " << check_Item_status(!found_book.value().is_sellable) << ")   (yes/no): ";
         getline(cin, is_sellable_inp);
         cout << "-----------------------------------------------------" << endl;
 
@@ -113,11 +113,11 @@ void storage::update_book(int ID)
         {
             if (book.ID == ID)
             {
-                book.title = title_inp.empty() ? found_Book->title : title_inp;
-                book.author = author_inp.empty() ? found_Book->author : author_inp;
-                book.available_copies = a_copies_inp.empty() ? found_Book->available_copies : stoi(a_copies_inp);
-                bool check = is_sellable_inp == "yes" ? !found_Book->is_sellable : found_Book->is_sellable;
-                book.is_sellable = is_sellable_inp.empty() ? found_Book->is_sellable : check;
+                book.title = title_inp.empty() ? found_book->title : title_inp;
+                book.author = author_inp.empty() ? found_book->author : author_inp;
+                book.available_copies = a_copies_inp.empty() ? found_book->available_copies : stoi(a_copies_inp);
+                bool check = is_sellable_inp == "yes" ? !found_book->is_sellable : found_book->is_sellable;
+                book.is_sellable = is_sellable_inp.empty() ? found_book->is_sellable : check;
             }
         }
 
@@ -127,12 +127,13 @@ void storage::update_book(int ID)
 
 void storage::delete_book(int ID)
 {
-    auto found_Book = find(books, ID);
+    auto found_book = find(books, ID);
 
-    if (found_Book.has_value())
+    if (found_book.has_value())
     {
 
         remove_elements_by_id(books, ID);
+        cout << "Book removed successfully" << endl;
     }
 }
 
@@ -216,12 +217,12 @@ ostream &operator<<(ostream &o, subscription &s)
     return o;
 }
 
-void storage::add_subs(subscription &s)
+void storage::add_sub(subscription &s)
 {
     subs.push_back(s);
 }
 
-void storage::add_subs()
+void storage::add_sub()
 {
     subscription s;
     s.ID = ids_subs;
@@ -258,8 +259,8 @@ void storage::all_subs()
 }
 void storage::show_sub(int ID)
 {
-
-    auto found_sub = find(subs,ID);
+    cout << "===========================\n";
+    auto found_sub = find(subs, ID);
     if (found_sub.has_value())
     {
         cout << found_sub.value() << endl;
@@ -267,5 +268,50 @@ void storage::show_sub(int ID)
     else
     {
         cout << "Element not found." << endl;
+    }
+    cout << "===========================\n";
+}
+
+void storage::update_sub(int ID)
+{
+    this->show_sub(ID);
+    auto found_sub = find(subs, ID);
+
+    if (found_sub.has_value())
+    {
+        string name_inp, desc_inp, price_inp;
+
+        cout << "Press enter to keep the current value unchanged." << endl;
+        cout << "-----------------------------------------------------" << endl;
+        cout << "Update subs  (" << found_sub.value().name << ") : ";
+        getline(cin, name_inp);
+        cout << "Update price (" << found_sub.value().price << ") : ";
+        getline(cin, price_inp);
+        cout << "Update description ( " << found_sub.value().description << ") : ";
+        getline(cin, desc_inp);
+        cout << "-----------------------------------------------------" << endl;
+
+        for (subscription &sub : subs)
+        {
+            if (sub.ID == ID)
+            {
+                sub.name = name_inp.empty() ? found_sub->name : name_inp;
+                sub.price = price_inp.empty() ? found_sub->price : stod(price_inp);
+                sub.description = desc_inp.empty() ? found_sub->description : desc_inp;
+            }
+        }
+
+        this->show_sub(ID);
+    }
+}
+
+void storage::delete_sub(int ID)
+{
+    auto found_sub = find(subs, ID);
+
+    if (found_sub.has_value())
+    {
+        remove_elements_by_id(subs, ID);
+        cout << "Subscription removed successfully" << endl;
     }
 }
