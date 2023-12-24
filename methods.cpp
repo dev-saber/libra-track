@@ -3,7 +3,9 @@
 #include "utils.cpp"
 
 // Book class
-int storage::id_generator = 0;
+int storage::id_generator = 1;
+int storage::ids_subs = 1;
+
 book::book(int id, string ti, string auth, int ac, bool sell) : ID(id), title(ti), author(auth), available_copies(ac), is_sellable(sell){};
 book::book() : ID(0), title(""), author(""), available_copies(0), is_sellable(false){};
 
@@ -53,7 +55,7 @@ void storage::add_book()
     // add later an if statement wether we add a new book or not (the fct calls itself)
 }
 
-void storage::show(int ID)
+void storage::show_book(int ID)
 {
 
     auto foundBook1 = find(books, ID);
@@ -88,7 +90,7 @@ void storage::all_books()
 
 void storage::update_book(int ID)
 {
-    this->show(ID);
+    this->show_book(ID);
     auto found_Book = find(books, ID);
 
     if (found_Book.has_value())
@@ -119,7 +121,7 @@ void storage::update_book(int ID)
             }
         }
 
-        this->show(ID);
+        this->show_book(ID);
     }
 }
 
@@ -154,7 +156,7 @@ void storage::delete_book(int ID)
 //         {
 //             is_sellable_inp = "no choice";
 //         }
-        
+
 //     } while (author == "" && title == "");
 
 //     if (is_sellable_inp != "no choice")
@@ -200,3 +202,70 @@ void storage::delete_book(int ID)
 //     // 2- get the category (sellable / borrowble)
 //     // 3- available copies > 0
 // }
+
+subscription::subscription() : ID(0), name(""), price(0), description("") {}
+subscription::subscription(int id, string n, double p, string d) : ID(id), name(n), price(p), description(d) {}
+
+ostream &operator<<(ostream &o, subscription &s)
+{
+    o << "Subscription ID: " << s.ID << endl;
+    o << "Subscription name: " << s.name << endl;
+    o << "Subscription price: " << s.price << endl;
+    o << "Description: " << s.description << endl;
+
+    return o;
+}
+
+void storage::add_subs(subscription &s)
+{
+    subs.push_back(s);
+}
+
+void storage::add_subs()
+{
+    subscription s;
+    s.ID = ids_subs;
+
+    cout << "Enter the subscription name : ";
+    getline(cin >> ws, s.name);
+    cout << "Enter the subscription price : ";
+    cin >> s.price;
+    cout << "Subscription description: ";
+    getline(cin >> ws, s.description);
+
+    ids_subs++;
+
+    subs.push_back(s);
+}
+
+void storage::all_subs()
+{
+    cout << "=== All subscriptions in Storage ===\n";
+
+    if (subs.empty())
+    {
+        cout << "No subscription found in the storage.\n";
+    }
+    else
+    {
+        for (subscription &s : subs)
+        {
+            cout << s << "\n \n";
+        }
+    }
+
+    cout << "===========================\n";
+}
+void storage::show_sub(int ID)
+{
+
+    auto found_sub = find(subs,ID);
+    if (found_sub.has_value())
+    {
+        cout << found_sub.value() << endl;
+    }
+    else
+    {
+        cout << "Element not found." << endl;
+    }
+}

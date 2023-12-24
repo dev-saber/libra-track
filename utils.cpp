@@ -7,7 +7,7 @@ using namespace std;
 template <class V, class I>
 optional<V> find(vector<V> vector, I ID)
 {
-    auto it = find_if(vector.begin(), vector.end(), [ID](const book &obj)
+    auto it = find_if(vector.begin(), vector.end(), [ID](const V &obj)
                       { return obj.ID == ID; });
     if (it != vector.end())
     {

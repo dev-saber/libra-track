@@ -15,7 +15,7 @@ class book
     friend optional<V> find(vector<V>, I);
 
     template <class V, class I>
-    friend void remove_elements_by_id(vector<V>&, I);
+    friend void remove_elements_by_id(vector<V> &, I);
 
 private:
     int ID;
@@ -27,25 +27,55 @@ private:
 public:
     book(int, string, string, int, bool);
     book();
-    // ~book();
 };
+
+class subscription
+{
+
+
+ template <class V, class I>
+    friend optional<V> find(vector<V>, I);
+    friend class storage;
+    friend ostream &operator<<(ostream &, subscription &);
+
+private:
+    int ID;
+    string name;
+    double price;
+    string description;
+
+public:
+    subscription(int, string, double, string);
+    subscription();
+};
+
 class storage
 {
+    
+   
     friend string check_Item_status(bool);
     template <class V, class I>
-    friend void remove_elements_by_id(vector<V>&, I);
-    friend bool regex_search_pattern(string,string);
+    friend void remove_elements_by_id(vector<V> &, I);
+    friend bool regex_search_pattern(string, string);
 
 private:
     vector<book> books;
+    vector<subscription> subs;
 
 public:
     static int id_generator;
+    static int ids_subs;
     void add_book(book &);
     void add_book();
     void update_book(int);
     void delete_book(int);
     void all_books();
-    void show(int);
+    void show_book(int);
     void search();
+
+    void all_subs();
+    void show_sub(int);
+
+    void add_subs(subscription &);
+    void add_subs();
 };
