@@ -3,59 +3,71 @@ using namespace std;
 
 int main()
 {
-    book b1(1, "title 1", "auth 1", 4, false),
-        b2(2, "title 2", "auth 2", 90, true),
-        // b3(3, "title 4", "auth 2", 70, true),
-        // b4(4, "title 3", "auth 2", 80, true),
-        // b5(5, "title 5", "auth 2", 90, true),
-        // b6(6, "title 6", "auth 2", 50, true),
-        // b7(7, "title 7", "auth 2", 40, true),
-        // b8(8, "title 8", "auth 2", 3430, true),
-        // b9(9, "title 9", "auth 2", 20, true),
-        b10(10, "title 10", "auth 2", 60, true),
-        b11(11, "title 2", "auth 2", 440, true);
 
-    storage s;
-    s.add_book(b1);
-    s.add_book(b2);
-    // s.add_book(b3);
-    // s.add_book(b4);
-    // s.add_book(b5);
-    // s.add_book(b6);
-    // s.add_book(b7);
-    // s.add_book(b8);
-    // s.add_book(b9);
-    // s.add_book(b10);
-    // s.add_book(b11);
-    // s.add_book();
+    storage storage_instance;
 
-    // s.show_book(111);
-    // s.show_book(1);
-    // s.show(2);
-    // s.show(3);
-    // s.all_books();
+    int choice;
+    do {
+        cout << "===== Menu =====" << endl;
+        cout << "===== Book Management =====" << endl;
+        cout << "1. Add Book" << endl;
+        cout << "2. Show All Books" << endl;
+        cout << "3. Update Book" << endl;
+        cout << "4. Delete Book" << endl;
+        cout << "===== Subscription Management =====" << endl;
+        cout << "5. Add Subscription" << endl;
+        cout << "6. Show All Subscriptions" << endl;
+        cout << "7. Update Subscription" << endl;
+        cout << "8. Delete Subscription" << endl;
+        cout << "0. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); 
 
-    // s.add_book();
-    // s.all_books();
-
-    // s.delete_book(10);
-    // s.delete_book(9);
-    // s.delete_book(11);
-    // s.all_books();
-    // s.update_book(111);
-
-    // s.search();
-    // cout << regex_search_pattern("meryem","mer");
-
-    s.add_sub();
-    s.add_sub();
-    // s.all_subs();
-
-    s.all_subs();
-    // s.update_sub(1);
-    // s.update_sub(2);
-    s.delete_sub(1);  
-    s.all_subs();  
+        switch (choice) {
+            case 1:
+                storage_instance.add_book();
+                break;
+            case 2:
+                storage_instance.all_books();
+                break;
+            case 3:
+                int updateBookID;
+                cout << "Enter the ID of the book to update: ";
+                cin >> updateBookID;
+                storage_instance.update_book(updateBookID);
+                break;
+            case 4:
+                int deleteBookID;
+                cout << "Enter the ID of the book to delete: ";
+                cin >> deleteBookID;
+                storage_instance.delete_book(deleteBookID);
+                break;
+            case 5:
+                storage_instance.add_sub();
+                break;
+            case 6:
+                storage_instance.all_subs();
+                break;
+            case 7:
+                int updateSubID;
+                cout << "Enter the ID of the subscription to update: ";
+                cin >> updateSubID;
+                storage_instance.update_sub(updateSubID);
+                break;
+            case 8:
+                int deleteSubID;
+                cout << "Enter the ID of the subscription to delete: ";
+                cin >> deleteSubID;
+                storage_instance.delete_sub(deleteSubID);
+                break;
+            case 0:
+                cout << "Exiting the program. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 0);
 
     return 0;
 }
