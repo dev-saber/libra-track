@@ -34,7 +34,7 @@ class storage
     friend string check_Item_status(bool);
     template <class V, class I>
     friend void remove_elements_by_id(vector<V>&, I);
-
+    friend bool regex_search_pattern(string,string);
 
 private:
     vector<book> books;
