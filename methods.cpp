@@ -137,72 +137,56 @@ void storage::delete_book(int ID)
     }
 }
 
-// void storage::search()
-// {
-//     string author, title, is_sellable_inp;
-//     bool is_sellable;
-//     do
-//     {
-//         cout << "Enter the title : " << endl;
-//         getline(cin, title);
-//         cout << "Enter the author : " << endl;
-//         getline(cin, author);
-//         cout << "Is the book for sell (yes/no) : " << endl;
-//         getline(cin, is_sellable_inp);
+void storage::search()
+{
+    string author, title, is_sellable_inp, is_sellable;
+    bool query_condition = true;
 
-//         title = title.empty() ? "" : title;
-//         author = author.empty() ? "" : author;
-//         // is_sellable_inp = is_sellable_inp.empty() ? "yes" : is_sellable_inp;
-//         if (is_sellable_inp.empty())
-//         {
-//             is_sellable_inp = "no choice";
-//         }
+    do
+    {
+        cout << "Enter the title : " << endl;
+        getline(cin, title);
+        cout << "Enter the author : " << endl;
+        getline(cin, author);
+        cout << "Is the book for sell (yes/no) : " << endl;
+        getline(cin, is_sellable_inp);
 
-//     } while (author == "" && title == "");
+        title = title.empty() ? "" : title;
+        author = author.empty() ? "" : author;
 
-//     if (is_sellable_inp != "no choice")
-//     {
-//         is_sellable = is_sellable_inp == "yes" ? true : false;
-//     }
-//     bool added_condition = is_sellable_inp != "no choice" && is_sellable;
+    } while (author == "" && title == "");
 
-//     for (auto book : books)
-//     {
-//         if (!author.empty() && !title.empty())
-//         {
-//             if (regex_search_pattern(book.title, title) && regex_search_pattern(book.author, author) )
-//             {
+    for (auto book : books)
+    {
+        query_condition = true;
 
-//                 cout << "======================" << endl;
-//                 cout << book << endl;
-//                 cout << "======================" << endl;
-//             }
-//         }
+        if (!title.empty())
+        {
+            query_condition = query_condition && regex_search_pattern(book.title, title);
+        }
 
-//         else if (author.empty() && !title.empty())
-//         {
-//             if (regex_search_pattern(book.title, title) && (book.is_sellable == added_condition))
-//             {
-//                 cout << "======================" << endl;
-//                 cout << book << endl;
-//                 cout << "======================" << endl;
-//             }
-//         }
-//         else if (!author.empty() && title.empty())
-//         {
-//             if (regex_search_pattern(book.author, author)&& (book.is_sellable == added_condition))
-//             {
-//                 cout << "======================" << endl;
-//                 cout << book << endl;
-//                 cout << "======================" << endl;
-//             }
-//         }
-//     }
+        if (!author.empty())
+        {
+            query_condition = query_condition && regex_search_pattern(book.author, author);
+        }
 
-//     // 1- get the author and / or title
-//     // 2- get the category (sellable / borrowble)
-//     // 3- available copies > 0
-// }
+        if (is_sellable_inp == "yes")
+        {
+            query_condition = query_condition && (book.is_sellable == true);
+        }
+
+        if (is_sellable_inp == "no")
+        {
+            query_condition = query_condition && (book.is_sellable == false);
+        }
+
+        if (query_condition)
+        {
+            cout << "======================" << endl;
+            cout << book << endl;
+        }
+    }
+}
 
 subscription::subscription() : ID(0), name(""), price(0), description("") {}
 subscription::subscription(int id, string n, double p, string d) : ID(id), name(n), price(p), description(d) {}
