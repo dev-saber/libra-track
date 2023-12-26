@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <optional>
+#include <ctime>
 
 using namespace std;
 
@@ -23,10 +24,43 @@ private:
     string author;
     int available_copies;
     bool is_sellable;
+    double price;
 
 public:
-    book(int, string, string, int, bool);
+    book(int, string, string, int, bool,double);
     book();
+};
+
+class user
+{
+protected:
+    int ID;
+    string full_name;
+    string email;
+    string phone;
+    string role;
+
+public:
+    user(int, string, string, string, string);
+};
+
+class buyer : private user
+{
+public:
+    buyer(int, string, string, string, string);
+};
+
+class buy_history
+{
+    friend class storage;
+private:
+    int ID_book;
+    int ID_buyer;
+    double price;
+    time_t created_at;
+
+public:
+    buy_history(int, int, double);
 };
 
 class subscription
@@ -58,6 +92,7 @@ class storage
 private:
     vector<book> books;
     vector<subscription> subs;
+    vector<buy_history> sales;
 
 public:
     static int id_generator;
@@ -77,4 +112,7 @@ public:
     void add_sub();
     void update_sub(int);
     void delete_sub(int);
+
+    void buy_book();
+    void show_all_sales();
 };

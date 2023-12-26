@@ -6,7 +6,7 @@
 int storage::id_generator = 1;
 int storage::ids_subs = 1;
 
-book::book(int id, string ti, string auth, int ac, bool sell) : ID(id), title(ti), author(auth), available_copies(ac), is_sellable(sell){};
+book::book(int id, string ti, string auth, int ac, bool sell, double price) : ID(id), title(ti), author(auth), available_copies(ac), is_sellable(sell), price(price){};
 book::book() : ID(0), title(""), author(""), available_copies(0), is_sellable(false){};
 
 // Storage class
@@ -15,6 +15,7 @@ ostream &operator<<(ostream &o, book &b)
     o << "Book ID: " << b.ID << endl;
     o << "Title: " << b.title << endl;
     o << "Author: " << b.author << endl;
+    o << "Price: " << b.price << endl;
     o << "Available copies: " << b.available_copies << endl;
 
     o << "Availability: " << check_Item_status(b.is_sellable);
@@ -38,6 +39,8 @@ void storage::add_book()
     getline(cin, b.author);
     cout << "How many available copies : ";
     cin >> b.available_copies;
+    cout << "Enter Price of the Book : ";
+    cin >> b.price;
 
     do
     {
@@ -95,7 +98,7 @@ void storage::update_book(int ID)
 
     if (found_book.has_value())
     {
-        string title_inp, author_inp, a_copies_inp, is_sellable_inp;
+        string title_inp, author_inp, a_copies_inp, is_sellable_inp, price_inp;
 
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
@@ -103,6 +106,8 @@ void storage::update_book(int ID)
         getline(cin, title_inp);
         cout << "Update author (" << found_book.value().author << ") : ";
         getline(cin, author_inp);
+        cout << "Update price (" << found_book.value().price << ") : ";
+        getline(cin, price_inp);
         cout << "Update available copies ( " << found_book.value().available_copies << ") : ";
         getline(cin, a_copies_inp);
         cout << "Change book status ( from " << check_Item_status(found_book.value().is_sellable) << " to " << check_Item_status(!found_book.value().is_sellable) << ")   (yes/no): ";
@@ -116,8 +121,11 @@ void storage::update_book(int ID)
                 book.title = title_inp.empty() ? found_book->title : title_inp;
                 book.author = author_inp.empty() ? found_book->author : author_inp;
                 book.available_copies = a_copies_inp.empty() ? found_book->available_copies : stoi(a_copies_inp);
+                book.price = price_inp.empty() ? found_book->price : stoi(price_inp);
                 bool check = is_sellable_inp == "yes" ? !found_book->is_sellable : found_book->is_sellable;
                 book.is_sellable = is_sellable_inp.empty() ? found_book->is_sellable : check;
+
+                break;
             }
         }
 
@@ -299,3 +307,60 @@ void storage::delete_sub(int ID)
         cout << "Subscription removed successfully" << endl;
     }
 }
+
+void storage::buy_book()
+{
+    int book_id, user_id;
+    cout << "enter the book id: ";
+    cin >> book_id;
+    cout << "enter the user id: ";
+    cin >> user_id;
+
+    auto foundBook = find(books, book_id);
+
+    if (foundBook.has_value() && (foundBook.value().is_sellable == true))
+    {
+        for (book &book : books)
+        {
+            if (book.ID == book_id)
+            {
+                book.available_copies--;
+                buy_history bh(user_id, book_id, book.price);
+                sales.push_back(bh);
+                break;
+            }
+        }
+    }
+    else
+    {
+        cout << "the book with the is either not available or not for sale" << endl;
+    }
+}
+
+void storage::show_all_sales()
+{
+    if (sales.size())
+    {
+        for (buy_history &purchase : sales)
+        {
+            cout << "Purchase Info:\n";
+            cout << "  Book ID: " << purchase.ID_book << "\n";
+            cout << "  Buyer ID: " << purchase.ID_buyer << "\n";
+            cout << "  Price:" << purchase.price << "\n";
+            cout << "  Created At: " << ctime(&purchase.created_at);
+        }
+    }
+    else
+    {
+        cout << "no sales" << endl;
+    }
+}
+
+// User class
+user::user(int id, string fn, string em, string ph, string r) : ID(id), full_name(fn), email(em), phone(ph), role(r) {}
+
+// Buyer class
+buyer::buyer(int id, string fn, string em, string ph, string r) : user(id, fn, em, ph, r) {}
+
+// Buy_history class
+buy_history::buy_history(int bo, int bu, double p) : ID_book(bo), ID_buyer(bu), price(p), created_at(time(0)) {}

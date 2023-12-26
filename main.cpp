@@ -7,6 +7,8 @@ int main()
     storage storage_instance;
 
     int choice;
+
+
     // do {
     //     cout << "===== Menu =====" << endl;
     //     cout << "===== Book Management =====" << endl;
@@ -69,15 +71,26 @@ int main()
     //     }
     // } while (choice != 0);
 
-    book b1(1, "title 1", "auth 1", 4, false),
-        b2(2, "title 2", "auth 2", 90, true),
-        b3(3, "title 3", "auth 1", 4, true);
+
+    book b1(1, "title 1", "auth 1", 4, false,12),
+        b2(2, "title 2", "auth 2", 90, true,15.7),
+        b3(3, "title 3", "auth 1", 4, true,18.9);
+
+    buyer bu(1, "sifeddineedr", " @ ", "0934", "buyer");
 
     storage_instance.add_book(b1);
     storage_instance.add_book(b3);
     storage_instance.add_book(b2);
 
-    storage_instance.search();
+    // storage_instance.search();
+
+    storage_instance.show_book(1);
+    storage_instance.buy_book();
+    // storage_instance.buy_book();
+    // storage_instance.show_book(1);
+
+    storage_instance.show_all_sales();
+    // storage_instance.all_books();
 
     return 0;
 }
