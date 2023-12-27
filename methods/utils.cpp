@@ -73,6 +73,15 @@ ostream &operator<<(ostream &o, subscription &s)
     return o;
 }
 
+
+
+
+
+
+
+
+
+
 // ostream &operator<<(ostream &o, buy_history &bh)
 // {
 //     o << "  Book ID: " << bh.ID_book << "\n";

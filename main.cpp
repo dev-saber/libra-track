@@ -21,18 +21,22 @@ int main()
 
     // storage_instance.search();
 
-    storage_instance.show_book(1);
+    // storage_instance.show_book(1);
     storage_instance.buy_book();
-    storage_instance.show_all_sales();
+    // storage_instance.show_all_sales();
     storage_instance.buy_book();
     // storage_instance.show_book(1);
 
-    storage_instance.show_all_sales();
-    storage_instance.show_sale_by_ID(1);
-    storage_instance.update_sale(1);
-    storage_instance.show_all_sales();
-    storage_instance.delete_sale(1);
-    storage_instance.show_all_sales();
+    // storage_instance.show_all_sales();
+    // storage_instance.show_sale_by_ID(1);
+    // storage_instance.update_sale(1);
+    // storage_instance.show_all_sales();
+    // storage_instance.delete_sale(1);
+    // storage_instance.show_all_sales();
+    storage_instance.show_all_user();
+
+
+
     
 
     return 0;

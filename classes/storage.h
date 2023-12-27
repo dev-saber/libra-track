@@ -12,6 +12,7 @@ private:
     vector<book> books;
     vector<subscription> subs;
     vector<buy_history> sales;
+    vector<user*> users;
 
 
 public:
@@ -39,4 +40,11 @@ public:
     void show_sale_by_ID(int);
     void delete_sale(int);
     void update_sale(int);
+
+    void subscribe();
+    void borrow_book();
+    // void return_book();
+
+    int add_user();
+    void show_all_user();
 };

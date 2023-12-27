@@ -4,6 +4,7 @@
 int storage::id_generator = 1;
 int storage::ids_subs = 1;
 int buy_history::ids_sales = 1;
+int user::user_id = 1;
 
 void storage::add_book(book &b)
 {
@@ -277,16 +278,45 @@ void storage::delete_sub(int ID)
     }
 }
 
+int storage::add_user()
+{
+    string full_name_inp, mail_inp, phone_inp, role_inp;
+    cout << "Enter the buyer full name : ";
+    getline(cin >> ws, full_name_inp);
+    cout << "Enter the email : ";
+    getline(cin >> ws, mail_inp);
+    cout << "phone: ";
+    getline(cin >> ws, phone_inp);
+
+    do
+    {
+        cout << "Role user (1 for member - 0 for buyer): ";
+        cin >> role_inp;
+    } while (stoi(role_inp) != 1 && stoi(role_inp) != 0);
+
+    if (stoi(role_inp) == 1)
+    {
+        users.push_back(new member(user::user_id, full_name_inp, mail_inp, phone_inp, "member"));
+    }
+    else
+    {
+        users.push_back(new buyer(user::user_id, full_name_inp, mail_inp, phone_inp, "buyer"));
+    }
+
+    user::user_id++;
+    return user::user_id - 1;
+};
+
 void storage::buy_book()
 {
     int book_id, user_id;
     cout << "enter the book id: ";
     cin >> book_id;
-    cout << "enter the user id: ";
-    cin >> user_id;
+    // cout << "enter the user id: ";
+    // cin >> user_id;
 
     auto foundBook = find(books, book_id);
-    // add checking existance of user
+     user_id = add_user();
 
     if (foundBook.has_value() && (foundBook.value().is_sellable == true))
     {
@@ -295,9 +325,11 @@ void storage::buy_book()
             if (book.ID == book_id)
             {
                 book.available_copies--;
-                buy_history bh(buy_history::ids_sales, book_id ,user_id, book.price);
+                buy_history bh(buy_history::ids_sales, book_id, user_id, book.price);
                 sales.push_back(bh);
                 buy_history::ids_sales++;
+
+                cout << "new row has been added to the fake database";
                 break;
             }
         }
@@ -308,7 +340,8 @@ void storage::buy_book()
     }
 }
 
-void buy_history::show_sale(){
+void buy_history::show_sale()
+{
     cout << "  Book ID: " << ID_book << "\n";
     cout << "  Buyer ID: " << ID_buyer << "\n";
     cout << "  Price:" << price << "\n";
@@ -336,21 +369,21 @@ void storage::show_all_sales()
     }
 }
 
-void storage::show_sale_by_ID(int ID){
-    // add checking user exixstence
-for (buy_history sale : sales)
+void storage::show_sale_by_ID(int ID)
 {
-    if (sale.ID_buyer==ID)
+    // add checking user exixstence
+    for (buy_history sale : sales)
     {
-        // cout << sale << endl;
-        sale.show_sale();
+        if (sale.ID_buyer == ID)
+        {
+            // cout << sale << endl;
+            sale.show_sale();
+        }
     }
-    
 }
 
-}
-
-void storage::delete_sale(int ID){
+void storage::delete_sale(int ID)
+{
     auto found_sale = find(sales, ID);
 
     if (found_sale.has_value())
@@ -360,19 +393,20 @@ void storage::delete_sale(int ID){
     }
 }
 
-void storage::update_sale(int ID){
+void storage::update_sale(int ID)
+{
     auto found_sale = find(sales, ID);
 
     if (found_sale.has_value())
     {
-        string ID_book_inp="", ID_buyer_inp="", price_inp="";
+        string ID_book_inp = "", ID_buyer_inp = "", price_inp = "";
 
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
         cout << "Update ID_book  (" << found_sale.value().ID_book << ") : ";
         getline(cin >> ws, ID_book_inp);
         cout << "Update ID_buyer (" << found_sale.value().ID_buyer << ") : ";
-        getline(cin , ID_buyer_inp);
+        getline(cin, ID_buyer_inp);
         cout << "Update price (" << found_sale.value().price << ") : ";
         getline(cin, price_inp);
         cout << "-----------------------------------------------------" << endl;
@@ -387,7 +421,49 @@ void storage::update_sale(int ID){
                 break;
             }
         }
-
     }
 }
 
+void storage::subscribe()
+{
+    cout << "Here are a possible subscriptions: " << endl;
+    // to be continued
+}
+
+void storage::borrow_book()
+{
+    int book_id, user_id;
+    cout << "enter the book id: ";
+    cin >> book_id;
+    cout << "enter the user id: ";
+    cin >> user_id;
+
+    auto foundBook = find(books, book_id);
+    // add checking existance of user
+
+    if (foundBook.has_value() && (foundBook.value().is_sellable == false))
+    {
+        for (book &book : books)
+        {
+            if (book.ID == book_id)
+            {
+                book.available_copies--;
+                buy_history bh(buy_history::ids_sales, book_id, user_id, book.price);
+                sales.push_back(bh);
+                buy_history::ids_sales++;
+                break;
+            }
+        }
+    }
+    else
+    {
+        cout << "the book with the is either not available or not for sale" << endl;
+    }
+}
+
+ void storage::show_all_user(){
+    for (const auto& user : users)
+    {
+        user->output();
+    }
+ }
