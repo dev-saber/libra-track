@@ -1,3 +1,6 @@
+#pragma once
+#include "../classes/book.h"
+#include "../classes/subscription.h"
 #include <iostream>
 #include <algorithm>
 #include <optional>
@@ -44,4 +47,27 @@ bool regex_search_pattern(string sentence, string search)
     }
     return false;
 
+}
+
+ostream &operator<<(ostream &o, book &b)
+{
+    o << "Book ID: " << b.ID << endl;
+    o << "Title: " << b.title << endl;
+    o << "Author: " << b.author << endl;
+    o << "Price: " << b.price << endl;
+    o << "Available copies: " << b.available_copies << endl;
+
+    o << "Availability: " << check_Item_status(b.is_sellable);
+
+    return o;
+}
+
+ostream &operator<<(ostream &o, subscription &s)
+{
+    o << "Subscription ID: " << s.ID << endl;
+    o << "Subscription name: " << s.name << endl;
+    o << "Subscription price: " << s.price << endl;
+    o << "Description: " << s.description << endl;
+
+    return o;
 }

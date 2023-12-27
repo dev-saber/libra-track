@@ -1,80 +1,16 @@
-#include "methods.cpp"
-using namespace std;
+#include "methods/book.cpp"
+#include "methods/buy_history.cpp"
+#include "methods/subscription.cpp"
+#include "methods/user.cpp"
+#include "methods/storage.cpp"
 
 int main()
 {
-
     storage storage_instance;
 
-    int choice;
-
-
-    // do {
-    //     cout << "===== Menu =====" << endl;
-    //     cout << "===== Book Management =====" << endl;
-    //     cout << "1. Add Book" << endl;
-    //     cout << "2. Show All Books" << endl;
-    //     cout << "3. Update Book" << endl;
-    //     cout << "4. Delete Book" << endl;
-    //     cout << "===== Subscription Management =====" << endl;
-    //     cout << "5. Add Subscription" << endl;
-    //     cout << "6. Show All Subscriptions" << endl;
-    //     cout << "7. Update Subscription" << endl;
-    //     cout << "8. Delete Subscription" << endl;
-    //     cout << "0. Exit" << endl;
-    //     cout << "Enter your choice: ";
-    //     cin >> choice;
-    //     cin.ignore();
-
-    //     switch (choice) {
-    //         case 1:
-    //             storage_instance.add_book();
-    //             break;
-    //         case 2:
-    //             storage_instance.all_books();
-    //             break;
-    //         case 3:
-    //             int updateBookID;
-    //             cout << "Enter the ID of the book to update: ";
-    //             cin >> updateBookID;
-    //             storage_instance.update_book(updateBookID);
-    //             break;
-    //         case 4:
-    //             int deleteBookID;
-    //             cout << "Enter the ID of the book to delete: ";
-    //             cin >> deleteBookID;
-    //             storage_instance.delete_book(deleteBookID);
-    //             break;
-    //         case 5:
-    //             storage_instance.add_sub();
-    //             break;
-    //         case 6:
-    //             storage_instance.all_subs();
-    //             break;
-    //         case 7:
-    //             int updateSubID;
-    //             cout << "Enter the ID of the subscription to update: ";
-    //             cin >> updateSubID;
-    //             storage_instance.update_sub(updateSubID);
-    //             break;
-    //         case 8:
-    //             int deleteSubID;
-    //             cout << "Enter the ID of the subscription to delete: ";
-    //             cin >> deleteSubID;
-    //             storage_instance.delete_sub(deleteSubID);
-    //             break;
-    //         case 0:
-    //             cout << "Exiting the program. Goodbye!" << endl;
-    //             break;
-    //         default:
-    //             cout << "Invalid choice. Please try again." << endl;
-    //     }
-    // } while (choice != 0);
-
-
-    book b1(1, "title 1", "auth 1", 4, false,12),
-        b2(2, "title 2", "auth 2", 90, true,15.7),
-        b3(3, "title 3", "auth 1", 4, true,18.9);
+    book b1(1, "title 1", "auth 1", 4, false, 12),
+        b2(2, "title 2", "auth 2", 90, true, 15.7),
+        b3(3, "title 3", "auth 1", 4, true, 18.9);
 
     buyer bu(1, "sifeddineedr", " @ ", "0934", "buyer");
 
@@ -90,7 +26,6 @@ int main()
     // storage_instance.show_book(1);
 
     storage_instance.show_all_sales();
-    // storage_instance.all_books();
 
     return 0;
 }

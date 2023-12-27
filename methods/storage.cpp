@@ -1,27 +1,8 @@
-#include "classes.h"
-#include <algorithm>
+#include "../classes/storage.h"
 #include "utils.cpp"
 
-// Book class
 int storage::id_generator = 1;
 int storage::ids_subs = 1;
-
-book::book(int id, string ti, string auth, int ac, bool sell, double price) : ID(id), title(ti), author(auth), available_copies(ac), is_sellable(sell), price(price){};
-book::book() : ID(0), title(""), author(""), available_copies(0), is_sellable(false){};
-
-// Storage class
-ostream &operator<<(ostream &o, book &b)
-{
-    o << "Book ID: " << b.ID << endl;
-    o << "Title: " << b.title << endl;
-    o << "Author: " << b.author << endl;
-    o << "Price: " << b.price << endl;
-    o << "Available copies: " << b.available_copies << endl;
-
-    o << "Availability: " << check_Item_status(b.is_sellable);
-
-    return o;
-}
 
 void storage::add_book(book &b)
 {
@@ -196,19 +177,6 @@ void storage::search()
     }
 }
 
-subscription::subscription() : ID(0), name(""), price(0), description("") {}
-subscription::subscription(int id, string n, double p, string d) : ID(id), name(n), price(p), description(d) {}
-
-ostream &operator<<(ostream &o, subscription &s)
-{
-    o << "Subscription ID: " << s.ID << endl;
-    o << "Subscription name: " << s.name << endl;
-    o << "Subscription price: " << s.price << endl;
-    o << "Description: " << s.description << endl;
-
-    return o;
-}
-
 void storage::add_sub(subscription &s)
 {
     subs.push_back(s);
@@ -355,12 +323,3 @@ void storage::show_all_sales()
         cout << "no sales" << endl;
     }
 }
-
-// User class
-user::user(int id, string fn, string em, string ph, string r) : ID(id), full_name(fn), email(em), phone(ph), role(r) {}
-
-// Buyer class
-buyer::buyer(int id, string fn, string em, string ph, string r) : user(id, fn, em, ph, r) {}
-
-// Buy_history class
-buy_history::buy_history(int bo, int bu, double p) : ID_book(bo), ID_buyer(bu), price(p), created_at(time(0)) {}
