@@ -1,6 +1,7 @@
 #pragma once
 #include "../classes/book.h"
 #include "../classes/subscription.h"
+#include "../classes/buy_history.h"
 #include <iostream>
 #include <algorithm>
 #include <optional>
@@ -71,3 +72,12 @@ ostream &operator<<(ostream &o, subscription &s)
 
     return o;
 }
+
+// ostream &operator<<(ostream &o, buy_history &bh)
+// {
+//     o << "  Book ID: " << bh.ID_book << "\n";
+//     o << "  Buyer ID: " << bh.ID_buyer << "\n";
+//     o << "  Price:" << bh.price << "\n";
+//     o << "  Created At: " << ctime(&bh.created_at);
+//     return o;
+// }

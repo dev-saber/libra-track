@@ -17,6 +17,7 @@ private:
 public:
     static int id_generator;
     static int ids_subs;
+    // static int ids_sales;
     void add_book(book &);
     void add_book();
     void update_book(int);
@@ -35,4 +36,7 @@ public:
 
     void buy_book();
     void show_all_sales();
+    void show_sale_by_ID(int);
+    void delete_sale(int);
+    void update_sale(int);
 };

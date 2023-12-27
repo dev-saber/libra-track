@@ -4,6 +4,7 @@
 #include "methods/user.cpp"
 #include "methods/storage.cpp"
 
+
 int main()
 {
     storage storage_instance;
@@ -22,10 +23,17 @@ int main()
 
     storage_instance.show_book(1);
     storage_instance.buy_book();
-    // storage_instance.buy_book();
+    storage_instance.show_all_sales();
+    storage_instance.buy_book();
     // storage_instance.show_book(1);
 
     storage_instance.show_all_sales();
+    storage_instance.show_sale_by_ID(1);
+    storage_instance.update_sale(1);
+    storage_instance.show_all_sales();
+    storage_instance.delete_sale(1);
+    storage_instance.show_all_sales();
+    
 
     return 0;
 }
