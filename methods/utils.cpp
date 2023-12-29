@@ -8,6 +8,7 @@
 using namespace std;
 #include <regex>
 
+
 template <class V, class I>
 optional<V> find(vector<V> vector, I ID)
 {
@@ -23,6 +24,23 @@ optional<V> find(vector<V> vector, I ID)
         return nullopt;
     }
 };
+
+
+template <class V, class I>
+optional<V> find_user_pointers(vector<V> vector, I ID)
+{
+    auto it = find_if(vector.begin(), vector.end(), [ID](const V &obj)
+                      { return obj->ID == ID; });
+    if (it != vector.end())
+    {
+
+        return *it;
+    }
+    else
+    {
+        return nullopt;
+    }
+}
 
 string check_Item_status(bool choice)
 {

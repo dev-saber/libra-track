@@ -43,8 +43,9 @@ public:
 
     void subscribe();
     void borrow_book();
-    // void return_book();
 
-    int add_user();
+    user add_user(string);
     void show_all_user();
+    int add_new_user_row(user&);
+    bool find_member(int);
 };
