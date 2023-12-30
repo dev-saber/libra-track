@@ -10,7 +10,7 @@ class buy_history
     friend optional<V> find(vector<V>, I);
     template <class V, class I>
     friend void remove_elements_by_id(vector<V> &vector, I ID);
-    // friend ostream &operator<<(ostream &o, buy_history &bh);
+    friend ostream &operator<<(ostream &o,const buy_history &bh);
     
 private:
     int ID;

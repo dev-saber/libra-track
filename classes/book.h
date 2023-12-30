@@ -10,7 +10,7 @@ using namespace std;
 class book
 {
     friend class storage;
-    friend ostream &operator<<(ostream &, book &);
+    friend ostream &operator<<(ostream &, const book &);
 
     template <class V, class I>
     friend optional<V> find(vector<V>, I);

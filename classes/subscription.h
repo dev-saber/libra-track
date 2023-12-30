@@ -11,7 +11,7 @@ class subscription
     template <class V, class I>
     friend optional<V> find(vector<V>, I);
     friend class storage;
-    friend ostream &operator<<(ostream &, subscription &);
+    friend ostream &operator<<(ostream &, const subscription &);
     template <class V, class I>
     friend void remove_elements_by_id(vector<V> &, I);
 

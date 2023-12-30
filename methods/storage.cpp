@@ -16,6 +16,7 @@ void storage::add_book()
 {
     book b;
     string bool_input;
+    cout << "=== Add New Book ===\n";
 
     cout << "Enter a title book : ";
     getline(cin >> ws, b.title);
@@ -279,7 +280,7 @@ void storage::delete_sub(int ID)
     }
 }
 
-user storage::add_user(string r="")
+user storage::add_user(string r = "")
 {
     string full_name_inp, mail_inp, phone_inp;
     int role_inp;
@@ -290,46 +291,44 @@ user storage::add_user(string r="")
     cout << "phone: ";
     getline(cin >> ws, phone_inp);
 
-    if(r==""){
-        do
+    if (r == "")
     {
-        cout << "Role user (1 for member - 0 for buyer): ";
-        cin >> role_inp;
-    } while (role_inp!= 1 && role_inp != 0);
-    r = role_inp == 1 ? "member" : "buyer";
+        do
+        {
+            cout << "Role user (1 for member - 0 for buyer): ";
+            cin >> role_inp;
+        } while (role_inp != 1 && role_inp != 0);
+        r = role_inp == 1 ? "member" : "buyer";
     }
     user u(user::user_id, full_name_inp, mail_inp, phone_inp, r);
 
     return u;
-    
-   
 }
 
-
-
-int storage::add_new_user_row(user& u){
-if (u.role=="member")
+int storage::add_new_user_row(user &u)
 {
-    users.push_back(new member(u,false));
-
-}else{
-     users.push_back(new buyer(u));
+    if (u.role == "member")
+    {
+        users.push_back(new member(u, true));
+    }
+    else
+    {
+        users.push_back(new buyer(u));
+    }
+    user::user_id++;
+    return user::user_id - 1;
 }
-user::user_id++;
-return user::user_id-1;
-}
-
 
 void storage::buy_book()
 {
     int book_id, user_id, role_inp;
-    bool is_active_bool=true;
+    bool is_active_bool = true;
 
     cout << "enter the role (member 1 - buyer 0): ";
     cin >> role_inp;
     if (role_inp == 1)
     {
-        bool is_found=true;
+        bool is_found = true;
         do
         {
             cout << "Enter the member ID: ";
@@ -339,27 +338,24 @@ void storage::buy_book()
 
             if (!found_member.has_value())
             {
-                is_found=false;
+                is_found = false;
             }
-            else{
-                auto derivedMember = dynamic_cast< member*>(found_member.value());
-            if (derivedMember)
+            else
             {
-            
-           is_active_bool =  derivedMember->get_is_active()==false ? false:true ;
-        }
-                
-                
+                auto derivedMember = dynamic_cast<member *>(found_member.value());
+                if (derivedMember)
+                {
+
+                    is_active_bool = derivedMember->get_is_active() == false ? false : true;
+                }
             }
         } while (!is_found);
     }
     else
     {
         user user_instance;
-        user_instance=add_user("buyer");
+        user_instance = add_user("buyer");
         user_id = add_new_user_row(user_instance);
-
-        
     }
 
     cout << "enter the book id: ";
@@ -407,8 +403,9 @@ void storage::show_all_sales()
     {
         for (buy_history &purchase : sales)
         {
-           
-            purchase.show_sale();
+
+            // purchase.show_sale();
+            cout << purchase ;
         }
     }
     else
@@ -421,19 +418,18 @@ void storage::show_sale_by_ID(int ID)
 {
     // add checking user exixstence
 
-    auto found_user=find_user_pointers(users,ID);
+    auto found_user = find_user_pointers(users, ID);
     if (found_user.has_value())
     {
         for (buy_history sale : sales)
-    {
-        if (sale.ID_buyer == ID)
         {
-            sale.show_sale();
+            if (sale.ID_buyer == ID)
+            {
+                // sale.show_sale();
+                cout << sale;
+            }
         }
     }
-    }
-
-    
 }
 
 void storage::delete_sale(int ID)
@@ -484,6 +480,11 @@ void storage::subscribe()
     // to be continued
 }
 
+
+// int storage::get_count_borrowed(int ID){
+
+// }
+
 void storage::borrow_book()
 {
     int book_id, user_id;
@@ -494,7 +495,7 @@ void storage::borrow_book()
 
     auto foundBook = find(books, book_id);
     // add checking existance of user
-
+    auto found_user=find_user_pointers(users,user_id);
     if (foundBook.has_value() && (foundBook.value().is_sellable == false))
     {
         for (book &book : books)
@@ -517,8 +518,41 @@ void storage::borrow_book()
 
 void storage::show_all_user()
 {
-    for (const auto &user : users)
+    if (!users.empty())
     {
-        user->output();
+        for (const auto &user : users)
+        {
+            user->output();
+        }
+    }
+    else
+    {
+        cout << "no users been registered";
+    }
+}
+
+// void borrow_history::show_borrow(){
+//     cout << ID << endl;
+//     cout << ID_member<< endl;
+//     cout << ID_book<< endl;
+//     cout << ctime(&borrow_date)<< endl;
+//     cout <<ctime(&return_date)<< endl;
+//     is_returned ? cout << "not returned yet " : cout << "returned back"<< endl;
+   
+ 
+// }
+void storage::show_all_borrowed()
+{
+    if (!borrows.empty())
+    {
+        for (borrow_history &b : borrows)
+        {
+            // b.show_borrow();
+            cout << b ;
+        }
+    }
+    else
+    {
+        cout << "no users been registered";
     }
 }

@@ -2,6 +2,7 @@
 #include "book.h"
 #include "subscription.h"
 #include "buy_history.h"
+#include "borrow_history.h"
 
 class storage
 {
@@ -13,6 +14,7 @@ private:
     vector<subscription> subs;
     vector<buy_history> sales;
     vector<user*> users;
+    vector<borrow_history> borrows;
 
 
 public:
@@ -47,5 +49,8 @@ public:
     user add_user(string);
     void show_all_user();
     int add_new_user_row(user&);
-    bool find_member(int);
+
+
+    int get_count_borrowed(int);
+    void show_all_borrowed();
 };
