@@ -9,7 +9,7 @@ class user
     template <class V, class I>
     friend optional<V> find_user_pointers(vector<V> vector, I ID);
 
-    public : 
+public:
     static int user_id;
 
 protected:
@@ -20,9 +20,9 @@ protected:
     string role;
 
 public:
-user();
+    user();
     user(int, string, string, string, string);
-    user(user&);
+    user(user &);
     virtual void output();
 };
 
@@ -32,9 +32,8 @@ class buyer : public user
 
 public:
     buyer(int, string, string, string, string);
-    buyer(user&);
+    buyer(user &);
     void output();
-
 };
 
 class member : public buyer
@@ -44,10 +43,9 @@ class member : public buyer
 
 public:
     member(int, string, string, string, string, bool);
-    member(user&);
-    member(user&, bool);
+    member(user &);
+    member(user &, bool);
     void output();
-    bool get_is_active(){
-        return is_active;
-    };
+    bool get_is_active();
+    void set_is_active(bool);
 };

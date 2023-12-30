@@ -15,7 +15,7 @@ int main()
         b4(4, "title 4", "auth 2", 0, false, 18.9);
 
     buyer bu(1, "sifeddineedr", " @ ", "0934", "buyer");
-    member m1(2, "meryem", "yunogasai@gmail.com", "2345","member", true);
+    member m1(2, "meryem", "yunogasai@gmail.com", "2345", "member", true);
     member m2(3, "sifeddine", "yi@gmail.com", "45", "member", false);
 
     storage_instance.add_book(b1);
@@ -23,10 +23,11 @@ int main()
     storage_instance.add_book(b2);
     storage_instance.add_book(b4);
 
-    storage_instance.all_books();
+    // storage_instance.all_books();
 
-    int b=storage_instance.add_new_user_row(m1);
-    int h=storage_instance.add_new_user_row(m2);
+    storage_instance.add_new_user_row(bu);
+    storage_instance.add_new_user_row(m1);
+    storage_instance.add_new_user_row(m2);
 
     // storage_instance.show_all_user();
     // storage_instance.search();
@@ -52,12 +53,19 @@ int main()
     // cout << br;
     // br.show_borrow();
 
-    storage_instance.show_all_borrowed();
-    storage_instance.borrow_book();
-    storage_instance.show_all_borrowed();
-    storage_instance.borrow_book();
-    storage_instance.show_all_borrowed();
-    storage_instance.borrow_book();
+    // storage_instance.show_all_borrowed();
+    // storage_instance.borrow_book();
+    // storage_instance.show_all_borrowed();
+    // storage_instance.borrow_book();
+    // storage_instance.show_all_borrowed();
+    // storage_instance.borrow_book();
+
+    // storage_instance.update_user(4);
+    // storage_instance.show_all_user();
+    // storage_instance.update_user(2);
+    // storage_instance.show_all_user();
+    // storage_instance.update_user(3);
+    // storage_instance.show_all_user();
     // cout << br;
 
     return 0;

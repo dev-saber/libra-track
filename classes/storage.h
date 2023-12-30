@@ -9,7 +9,8 @@ class storage
 {
     friend string check_Item_status(bool);
     friend bool regex_search_pattern(string, string);
-    friend bool check_member_active(optional<user*>&);
+    friend bool check_member_active(optional<user *> &);
+    friend void update_member_active(std::optional<user *> &u, bool newActiveValue);
 
 private:
     vector<book> books;
@@ -50,6 +51,7 @@ public:
     user add_user(string);
     void show_all_user();
     int add_new_user_row(user &);
+    void update_user(int);
 
     int get_count_borrowed(int);
     void show_all_borrowed();

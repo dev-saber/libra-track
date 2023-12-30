@@ -66,14 +66,30 @@ bool regex_search_pattern(string sentence, string search)
     }
     return false;
 }
-bool check_member_active(optional<user*>& u) {
-    if (u.has_value()) {
-        member* derivedMember = dynamic_cast<member*>(u.value());
-        if (derivedMember) {
+
+bool check_member_active(optional<user *> &u)
+{
+    if (u.has_value())
+    {
+        member *derivedMember = dynamic_cast<member *>(u.value());
+        if (derivedMember)
+        {
             return derivedMember->get_is_active();
         }
     }
 
     // If not a member or u is empty
     return false;
+}
+
+void update_member_active(std::optional<user *> &u, bool newActiveValue)
+{
+    if (u.has_value())
+    {
+        member *derivedMember = dynamic_cast<member *>(u.value());
+        if (derivedMember)
+        {
+            derivedMember->set_is_active(newActiveValue);
+        }
+    }
 }

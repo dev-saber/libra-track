@@ -524,29 +524,43 @@ void storage::borrow_book()
     else
     {
         // (!found_user.has_value() || found_user.value()->role != "member") ? cout << "No member with that ID" << endl : (!foundBook.has_value() ? cout << "The book isn't available" << endl : (foundBook.value().is_sellable ? cout << "Book not for borrow" << endl : (!check_member_active(found_user) ? cout << "Member not active" << endl : (foundBook.value().available_copies == 0 ? cout << "No available copies in stock" : cout << "Couldn't borrow already borrowed books without return" << endl))));
-    
-    if (!found_user.has_value() || found_user.value()->role != "member") {
-    cout << "No member with that ID" << endl;
-} else {
-    if (!foundBook.has_value()) {
-        cout << "The book isn't available" << endl;
-    } else {
-        if (foundBook.value().is_sellable) {
-            cout << "Book not for borrow" << endl;
-        } else {
-            if (!check_member_active(found_user)) {
-                cout << "Member not active" << endl;
-            } else {
-                if (foundBook.value().available_copies == 0) {
-                    cout << "No available copies in stock" << endl;
-                } else {
-                    cout << "Couldn't borrow already borrowed books without return" << endl;
+
+        if (!found_user.has_value() || found_user.value()->role != "member")
+        {
+            cout << "No member with that ID" << endl;
+        }
+        else
+        {
+            if (!foundBook.has_value())
+            {
+                cout << "The book isn't available" << endl;
+            }
+            else
+            {
+                if (foundBook.value().is_sellable)
+                {
+                    cout << "Book not for borrow" << endl;
+                }
+                else
+                {
+                    if (!check_member_active(found_user))
+                    {
+                        cout << "Member not active" << endl;
+                    }
+                    else
+                    {
+                        if (foundBook.value().available_copies == 0)
+                        {
+                            cout << "No available copies in stock" << endl;
+                        }
+                        else
+                        {
+                            cout << "Couldn't borrow already borrowed books without return" << endl;
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
     }
 }
 
@@ -587,5 +601,52 @@ void storage::show_all_borrowed()
     else
     {
         cout << "no users been registered";
+    }
+}
+
+void storage::update_user(int ID)
+{
+    auto found_user = find_user_pointers(users, ID);
+    if (found_user.has_value())
+    {
+        string full_name_inp, email_inp, phone_inp;
+        bool is_active_inp;
+
+        cout << "Press enter to keep the current value unchanged." << endl;
+        cout << "-----------------------------------------------------" << endl;
+        cout << "Update full name  (" << found_user.value()->full_name << ") : ";
+        getline(cin, full_name_inp);
+        cout << "Update email (" << found_user.value()->email << ") : ";
+        cin >> email_inp;
+        cout << "Update phone (" << found_user.value()->phone << ") : ";
+        cin >> phone_inp;
+
+        if (found_user.value()->role == "member")
+        {
+            cout << "Update the is active value (1 for true et 0 for false): ";
+            cin >> is_active_inp;
+        }
+
+        for (auto &&u : users)
+        {
+            if (u->ID == ID)
+            {
+                u->full_name = full_name_inp.empty() ? u->full_name : full_name_inp;
+                u->email = email_inp.empty() ? u->email : email_inp;
+                u->phone = phone_inp.empty() ? u->phone : phone_inp;
+                //    found_user.value()->role=="member" ?  update_member_active(found_user,is_active_inp): void(0);
+                if (found_user.value()->role == "member")
+                {
+                    is_active_inp == 1 ? true : false;
+                    update_member_active(found_user, is_active_inp);
+                }
+            }
+        }
+
+        cout << "-----------------------------------------------------" << endl;
+    }
+    else
+    {
+        cout << "No user with the given ID" << endl;
     }
 }
