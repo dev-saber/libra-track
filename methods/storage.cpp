@@ -342,12 +342,13 @@ void storage::buy_book()
             }
             else
             {
-                auto derivedMember = dynamic_cast<member *>(found_member.value());
-                if (derivedMember)
-                {
+                // auto derivedMember = dynamic_cast<member *>(found_member.value());
+                // if (derivedMember)
+                // {
 
-                    is_active_bool = derivedMember->get_is_active() == false ? false : true;
-                }
+                //     is_active_bool = derivedMember->get_is_active() == false ? false : true;
+                // }
+                is_active_bool = check_member_active(found_member);
             }
         } while (!is_found);
     }
@@ -405,7 +406,7 @@ void storage::show_all_sales()
         {
 
             // purchase.show_sale();
-            cout << purchase ;
+            cout << purchase;
         }
     }
     else
@@ -480,39 +481,72 @@ void storage::subscribe()
     // to be continued
 }
 
+int storage::get_count_borrowed(int ID)
+{
+    int counter = 0;
 
-// int storage::get_count_borrowed(int ID){
+    for (borrow_history &b : borrows)
+    {
+        if (b.ID_member == ID && !b.is_returned)
+        {
+            counter += 1;
+        }
+    }
 
-// }
+    return counter;
+}
 
 void storage::borrow_book()
 {
     int book_id, user_id;
     cout << "enter the book id: ";
     cin >> book_id;
-    cout << "enter the user id: ";
+    cout << "enter the member id: ";
     cin >> user_id;
 
     auto foundBook = find(books, book_id);
     // add checking existance of user
-    auto found_user=find_user_pointers(users,user_id);
-    if (foundBook.has_value() && (foundBook.value().is_sellable == false))
+    auto found_user = find_user_pointers(users, user_id);
+    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0 && get_count_borrowed(user_id) < 3)
     {
         for (book &book : books)
         {
             if (book.ID == book_id)
             {
                 book.available_copies--;
-                buy_history bh(buy_history::ids_sales, book_id, user_id, book.price);
-                sales.push_back(bh);
-                buy_history::ids_sales++;
+                borrow_history bh(borrow_history::borrowed_id, user_id, book_id);
+                borrows.push_back(bh);
+                borrow_history::borrowed_id++;
                 break;
             }
         }
     }
     else
     {
-        cout << "the book with the is either not available or not for sale" << endl;
+        // (!found_user.has_value() || found_user.value()->role != "member") ? cout << "No member with that ID" << endl : (!foundBook.has_value() ? cout << "The book isn't available" << endl : (foundBook.value().is_sellable ? cout << "Book not for borrow" << endl : (!check_member_active(found_user) ? cout << "Member not active" << endl : (foundBook.value().available_copies == 0 ? cout << "No available copies in stock" : cout << "Couldn't borrow already borrowed books without return" << endl))));
+    
+    if (!found_user.has_value() || found_user.value()->role != "member") {
+    cout << "No member with that ID" << endl;
+} else {
+    if (!foundBook.has_value()) {
+        cout << "The book isn't available" << endl;
+    } else {
+        if (foundBook.value().is_sellable) {
+            cout << "Book not for borrow" << endl;
+        } else {
+            if (!check_member_active(found_user)) {
+                cout << "Member not active" << endl;
+            } else {
+                if (foundBook.value().available_copies == 0) {
+                    cout << "No available copies in stock" << endl;
+                } else {
+                    cout << "Couldn't borrow already borrowed books without return" << endl;
+                }
+            }
+        }
+    }
+}
+
     }
 }
 
@@ -538,8 +572,7 @@ void storage::show_all_user()
 //     cout << ctime(&borrow_date)<< endl;
 //     cout <<ctime(&return_date)<< endl;
 //     is_returned ? cout << "not returned yet " : cout << "returned back"<< endl;
-   
- 
+
 // }
 void storage::show_all_borrowed()
 {
@@ -548,7 +581,7 @@ void storage::show_all_borrowed()
         for (borrow_history &b : borrows)
         {
             // b.show_borrow();
-            cout << b ;
+            cout << b;
         }
     }
     else

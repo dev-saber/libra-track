@@ -16,6 +16,5 @@ private:
 public:
     static int borrowed_id;
     borrow_history(int, int,int);
-    void show_borrow();
-
+    void show_borrow(int);
 };

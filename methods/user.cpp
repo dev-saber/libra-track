@@ -1,5 +1,6 @@
 
 #include "../classes/user.h"
+#include "../methods/utils.cpp"
 
 user::user() : ID(0), full_name(""), email(""), phone(""), role(""){};
 user::user(int id, string fn, string em, string ph, string r) : ID(id), full_name(fn), email(em), phone(ph), role(r){};

@@ -11,7 +11,7 @@ int main()
 
     book b1(1, "title 1", "auth 1", 4, false, 12),
         b2(2, "title 2", "auth 2", 1, true, 15.7),
-        b3(3, "title 3", "auth 1", 4, false, 18.9),
+        b3(3, "title 3", "auth 1", 1, false, 18.9),
         b4(4, "title 4", "auth 2", 0, false, 18.9);
 
     buyer bu(1, "sifeddineedr", " @ ", "0934", "buyer");
@@ -31,13 +31,13 @@ int main()
     // storage_instance.show_all_user();
     // storage_instance.search();
 
-    storage_instance.show_book(1);
-    storage_instance.buy_book();
+    // storage_instance.show_book(1);
+    // storage_instance.buy_book();
     // storage_instance.show_all_sales();
     // storage_instance.show_book(1);
 
-    storage_instance.show_all_sales();
-    storage_instance.show_sale_by_ID(1);
+    // storage_instance.show_all_sales();
+    // storage_instance.show_sale_by_ID(1);
     // storage_instance.update_sale(1);
     // storage_instance.show_all_sales();
     // storage_instance.delete_sale(1);
@@ -48,11 +48,17 @@ int main()
     // storage_instance.show_all_sales();
     // storage_instance.buy_book();
     // storage_instance.show_all_sales();
-    borrow_history br(1, 2,3);
+    // borrow_history br(1, 2,3);
     // cout << br;
     // br.show_borrow();
-    // storage_instance.show_all_borrowed();
-    cout << br;
+
+    storage_instance.show_all_borrowed();
+    storage_instance.borrow_book();
+    storage_instance.show_all_borrowed();
+    storage_instance.borrow_book();
+    storage_instance.show_all_borrowed();
+    storage_instance.borrow_book();
+    // cout << br;
 
     return 0;
 }

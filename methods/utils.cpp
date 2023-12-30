@@ -2,11 +2,13 @@
 #include "../classes/book.h"
 #include "../classes/subscription.h"
 #include "../classes/buy_history.h"
+#include "../classes/user.h"
 #include <iostream>
 #include <algorithm>
 #include <optional>
-using namespace std;
 #include <regex>
+
+using namespace std;
 
 template <class V, class I>
 optional<V> find(vector<V> vector, I ID)
@@ -62,5 +64,16 @@ bool regex_search_pattern(string sentence, string search)
     {
         return true;
     }
+    return false;
+}
+bool check_member_active(optional<user*>& u) {
+    if (u.has_value()) {
+        member* derivedMember = dynamic_cast<member*>(u.value());
+        if (derivedMember) {
+            return derivedMember->get_is_active();
+        }
+    }
+
+    // If not a member or u is empty
     return false;
 }

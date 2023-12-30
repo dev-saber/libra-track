@@ -3,19 +3,20 @@
 #include "subscription.h"
 #include "buy_history.h"
 #include "borrow_history.h"
+#include "../methods/utils.cpp"
 
 class storage
 {
     friend string check_Item_status(bool);
     friend bool regex_search_pattern(string, string);
+    friend bool check_member_active(optional<user*>&);
 
 private:
     vector<book> books;
     vector<subscription> subs;
     vector<buy_history> sales;
-    vector<user*> users;
+    vector<user *> users;
     vector<borrow_history> borrows;
-
 
 public:
     static int id_generator;
@@ -48,8 +49,7 @@ public:
 
     user add_user(string);
     void show_all_user();
-    int add_new_user_row(user&);
-
+    int add_new_user_row(user &);
 
     int get_count_borrowed(int);
     void show_all_borrowed();
