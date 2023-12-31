@@ -55,5 +55,9 @@ public:
     void delete_sub(int);
     void add_subscription();
     void show_all_subs();
+    
+    void add_subscription_record(int);
+    void show_sub_history(int);
+    void show_all_sub_history();
 
 };

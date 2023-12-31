@@ -331,7 +331,9 @@ void storage::delete_sub(int ID)
     if (found_sub.has_value())
     {
         remove_elements_by_id(subs, ID);
-    }else{
+    }
+    else
+    {
         cout << "no element with this id" << endl;
     }
 }
@@ -366,6 +368,7 @@ int storage::add_new_user_row(user &u)
     if (u.role == "member")
     {
         users.push_back(new member(u, true));
+        add_subscription_record(u.ID);
     }
     else
     {
@@ -778,5 +781,47 @@ void storage::show_all_subs()
     else
     {
         cout << "no sub has been added" << endl;
+    }
+}
+
+void storage::add_subscription_record(int member_id)
+{
+    int sub_id;
+    subscription_history sh;
+    cout << "Choose the subscription id: ";
+    cin >> sub_id;
+    auto found_sub = find(subs, sub_id);
+
+    if (found_sub.has_value())
+    {
+        sh.ID = subscription_history::subs_history_id;
+        sh.ID_member=member_id;
+        sh.ID_subscription=sub_id;
+        subs_history.push_back(sh);
+        subscription_history::subs_history_id++;
+    }
+    else
+    {
+        cout << "Invalid subscription id." << endl;
+    }
+}
+
+void storage::show_sub_history(int ID)
+{
+    auto found_sub = find(subs_history, ID);
+    if (found_sub.has_value())
+    {
+        cout << found_sub.value() << endl;
+    }
+    else
+    {
+        cout << "Element not found" << endl;
+    }
+}
+void storage::show_all_sub_history()
+{
+    for (subscription_history sh : subs_history)
+    {
+        cout << sh;
     }
 }
