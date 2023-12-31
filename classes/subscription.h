@@ -16,6 +16,7 @@ class subscription
     friend void remove_elements_by_id(vector<V> &, I);
 
 private:
+    static int subsc_ids;
     int ID;
     string name;
     double price;
@@ -24,4 +25,5 @@ private:
 public:
     subscription(int, string, double, string);
     subscription();
+    
 };

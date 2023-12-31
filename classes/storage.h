@@ -25,7 +25,6 @@ private:
 public:
     static int id_generator;
     static int ids_subs;
-    // static int ids_sales;
     void add_book(book &);
     void add_book();
     void update_book(int);
@@ -59,5 +58,8 @@ public:
     int get_count_borrowed(int);
     void show_all_borrowed();
     void check_to_change_is_active();
+
+    void add_subscription();
+    void show_all_subs();
 
 };

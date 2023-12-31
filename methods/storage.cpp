@@ -68,6 +68,7 @@ void storage::add_book()
         bool_input = string_to_lower(bool_input);
         cin.ignore();
     } while (bool_input != "yes" && bool_input != "no");
+
     b.is_sellable = "yes" ? true : false;
     b.ID = id_generator;
     books.push_back(b);
@@ -80,11 +81,10 @@ void storage::show_book(int ID)
     auto foundBook1 = find(books, ID);
     if (foundBook1.has_value())
     {
-        cout << "---- Book "
-             << " ----\n";
+        cout << "---- Book ----" << endl;
 
         cout << foundBook1.value() << endl;
-        cout << "-----------------------------\n";
+        cout << "-----------------------------" << endl;
     }
     else
     {
@@ -94,11 +94,11 @@ void storage::show_book(int ID)
 
 void storage::all_books()
 {
-    cout << "=== All Books in Storage ===\n";
+    cout << "=== All Books in Storage ===" << endl;
 
     if (books.empty())
     {
-        cout << "No books found in the storage.\n";
+        cout << "No books found in the storage." << endl;
     }
     else
     {
@@ -106,13 +106,13 @@ void storage::all_books()
         cout << "Number of books in the library: " << books.size() << endl;
         for (int i = 0; i < books.size(); i++)
         {
-            cout << "---- Book " << i + 1 << " ----\n";
+            cout << "---- Book " << i + 1 << " ----" << endl;
             cout << books[i] << endl;
-            cout << "-----------------------------\n";
+            cout << "-----------------------------" << endl;
         }
     }
 
-    cout << "===========================\n";
+    cout << "===========================" << endl;
 }
 
 void storage::update_book(int ID)
@@ -122,7 +122,6 @@ void storage::update_book(int ID)
     if (found_book.has_value())
     {
         string title_inp, author_inp, a_copies_inp, is_sellable_inp, price_inp;
-        float price_new_value;
 
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
@@ -166,18 +165,16 @@ void storage::update_book(int ID)
             }
         }
 
-            do
-    {
-         cin.clear();
-        cout << "Change book status ( from " << check_Item_status(found_book.value().is_sellable) << " to " << check_Item_status(!found_book.value().is_sellable) << " ) (yes/no): ";
+        do
+        {
+            cin.clear();
+            cout << "Change book status ( from " << check_Item_status(found_book.value().is_sellable) << " to " << check_Item_status(!found_book.value().is_sellable) << " ) (yes/no): ";
 
-        getline(cin, is_sellable_inp);
-        is_sellable_inp = string_to_lower(is_sellable_inp);
-    } while ( is_sellable_inp != "yes" && is_sellable_inp != "no" && !is_sellable_inp.empty());
-        
-        
+            getline(cin, is_sellable_inp);
+            is_sellable_inp = string_to_lower(is_sellable_inp);
+        } while (is_sellable_inp != "yes" && is_sellable_inp != "no" && !is_sellable_inp.empty());
+
         cout << "-----------------------------------------------------" << endl;
-
 
         for (book &book : books)
         {
@@ -186,7 +183,7 @@ void storage::update_book(int ID)
                 book.title = title_inp.empty() ? found_book->title : title_inp;
                 book.author = author_inp.empty() ? found_book->author : author_inp;
                 book.available_copies = a_copies_inp.empty() ? found_book->available_copies : stoi(a_copies_inp);
-                book.price = price_inp.empty() ? found_book->price :stof(price_inp);
+                book.price = price_inp.empty() ? found_book->price : stof(price_inp);
                 bool check = string_to_lower(is_sellable_inp) == "yes" ? !found_book->is_sellable : found_book->is_sellable;
                 book.is_sellable = is_sellable_inp.empty() ? found_book->is_sellable : check;
 
@@ -204,7 +201,9 @@ void storage::delete_book(int ID)
     {
 
         remove_elements_by_id(books, ID);
-        cout << "Book removed successfully" << endl;
+
+        // try except is remove
+        // cout << "Book removed successfully" << endl;
     }
 }
 
@@ -748,5 +747,64 @@ void storage::check_to_change_is_active()
         }
         // Delay for 24 hours (86400 seconds)
         this_thread::sleep_for(chrono::hours(24));
+    }
+}
+
+void storage::add_subscription()
+{
+    subscription s;
+
+    string name, desc;
+    do
+    {
+        cout << "Enter a subscription name: ";
+        getline(cin, name);
+        s.name = name;
+    } while (name.empty());
+
+    while (true)
+    {
+        cout << "Enter the subscription price : ";
+        string price_input;
+        cin >> price_input;
+
+        if (regex_match(price_input, regex("[+-]?([0-9]*[.])?[0-9]+")))
+        {
+            s.price = stof(price_input);
+            break;
+        }
+        else
+        {
+            cout << "Invalid input. Please enter a valid Price" << endl;
+            cin.clear();
+        }
+    }
+    cin.ignore();
+
+    do
+    {
+        cout << "Enter a subscription description: ";
+        getline(cin, desc);
+        s.description = desc;
+    } while (desc.empty());
+
+    s.ID = subscription::subsc_ids;
+    subscription::subsc_ids++;
+    subs.push_back(s);
+    cout << endl;
+}
+
+void storage::show_all_subs()
+{
+    if (!subs.empty())
+    {
+        for (subscription &sub : subs)
+        {
+            cout << sub << endl;
+        }
+    }
+    else
+    {
+        cout << "no sub has been added" << endl;
     }
 }

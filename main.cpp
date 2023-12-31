@@ -24,59 +24,14 @@ int main()
     storage_instance.add_book(b2);
     storage_instance.add_book(b4);
     storage_instance.add_book(b3);
-    // storage_instance.add_book();
-
-    storage_instance.all_books();
 
     storage_instance.add_new_user_row(bu);
     storage_instance.add_new_user_row(m1);
     storage_instance.add_new_user_row(m2);
 
-    storage_instance.update_book(2);
-    // storage_instance.show_all_user();
-    // storage_instance.search();
-
-    // storage_instance.show_book(1);
-    // storage_instance.buy_book();
-    // storage_instance.show_all_sales();
-    // storage_instance.show_book(1);
-
-    // storage_instance.show_all_sales();
-    // storage_instance.show_sale_by_ID(1);
-    // storage_instance.update_sale(1);
-    // storage_instance.show_all_sales();
-    // storage_instance.delete_sale(1);
-    // storage_instance.show_all_sales();
-    // storage_instance.show_all_user();
-    // storage_instance.show_all_sales();
-    // storage_instance.buy_book();
-    // storage_instance.show_all_sales();
-    // storage_instance.buy_book();
-    // storage_instance.show_all_sales();
-    // borrow_history br(1, 2,3);
-    // cout << br;
-    // br.show_borrow();
-
-    // storage_instance.show_all_borrowed();
-    // storage_instance.borrow_book();
-    // storage_instance.show_all_borrowed();
-    // storage_instance.borrow_book();
-    // storage_instance.show_all_borrowed();
-    // storage_instance.borrow_book();
-
-    // storage_instance.update_user(4);
-    // storage_instance.show_all_user();
-    // storage_instance.update_user(2);
-    // storage_instance.show_all_user();
-    // storage_instance.update_user(3);
-    // storage_instance.show_all_user();
-    // cout << br;
-
-    // storage_instance.check_to_change_is_active();
-    // 
-    storage_instance.show_book(2);
-    storage_instance.all_books();
-    
+    storage_instance.add_subscription();
+    storage_instance.add_subscription();
+    storage_instance.show_all_subs();
 
     return 0;
 }
