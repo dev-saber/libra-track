@@ -19,9 +19,10 @@ int main()
     member m1(2, "meryem", "yunogasai@gmail.com", "2345", "member", true);
     member m2(3, "sifeddine", "yi@gmail.com", "45", "member", false);
 
-    // storage_instance.add_book(b1);
-    // storage_instance.add_book(b3);
-    storage_instance.add_book();
+    storage_instance.add_book(b1);
+    storage_instance.add_book(b2);
+    storage_instance.add_book(b4);
+    storage_instance.add_book(b3);
     storage_instance.add_book();
 
     storage_instance.all_books();

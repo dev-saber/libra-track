@@ -72,7 +72,12 @@ void storage::show_book(int ID)
     auto foundBook1 = find(books, ID);
     if (foundBook1.has_value())
     {
+                    cout << "---- Book " << " ----\n";
+
+
         cout << foundBook1.value() << endl;
+                    cout << "-----------------------------\n";
+
     }
     else
     {
@@ -90,10 +95,16 @@ void storage::all_books()
     }
     else
     {
-        for (book &b : books)
+      
+        cout << "Number of books in the library: "<< books.size() << endl;
+        for (int i = 0; i < books.size(); i++)
         {
-            cout << b << endl;
+            cout << "---- Book " << i + 1 << " ----\n";
+            cout << books[i] << endl;
+            cout << "-----------------------------\n";
         }
+        
+        
     }
 
     cout << "===========================\n";
