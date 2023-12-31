@@ -29,9 +29,11 @@ int main()
     storage_instance.add_new_user_row(m1);
     storage_instance.add_new_user_row(m2);
 
-    storage_instance.add_subscription();
-    storage_instance.add_subscription();
-    storage_instance.show_all_subs();
+    // storage_instance.add_subscription();
+    // storage_instance.add_subscription();
+    storage_instance.delete_sub(1);
+    storage_instance.delete_sub(199);
+    
 
     return 0;
 }

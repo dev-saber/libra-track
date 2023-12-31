@@ -258,46 +258,6 @@ void storage::search()
     }
 }
 
-void storage::add_sub(subscription &s)
-{
-    subs.push_back(s);
-}
-
-void storage::add_sub()
-{
-    subscription s;
-    s.ID = ids_subs;
-
-    cout << "Enter the subscription name : ";
-    getline(cin >> ws, s.name);
-    cout << "Enter the subscription price : ";
-    cin >> s.price;
-    cout << "Subscription description: ";
-    getline(cin >> ws, s.description);
-
-    ids_subs++;
-
-    subs.push_back(s);
-}
-
-void storage::all_subs()
-{
-    cout << "=== All subscriptions in Storage ===\n";
-
-    if (subs.empty())
-    {
-        cout << "No subscription found in the storage.\n";
-    }
-    else
-    {
-        for (subscription &s : subs)
-        {
-            cout << s << "\n \n";
-        }
-    }
-
-    cout << "===========================\n";
-}
 void storage::show_sub(int ID)
 {
     cout << "===========================\n";
@@ -326,10 +286,28 @@ void storage::update_sub(int ID)
         cout << "-----------------------------------------------------" << endl;
         cout << "Update subs  (" << found_sub.value().name << ") : ";
         getline(cin, name_inp);
+
         cout << "Update price (" << found_sub.value().price << ") : ";
         getline(cin, price_inp);
-        cout << "Update description ( " << found_sub.value().description << ") : ";
+
+        while (!price_inp.empty())
+        {
+
+            if (regex_match(price_inp, regex("[+-]?([0-9]*[.])?[0-9]+")))
+            {
+                break;
+            }
+            else
+            {
+                cout << "Invalid input. Please enter a valid price : ";
+                cin.clear();
+                getline(cin, price_inp);
+            }
+        }
+
+        cout << "Update description (" << found_sub.value().description << ") : ";
         getline(cin, desc_inp);
+        cout << endl;
         cout << "-----------------------------------------------------" << endl;
 
         for (subscription &sub : subs)
@@ -353,7 +331,8 @@ void storage::delete_sub(int ID)
     if (found_sub.has_value())
     {
         remove_elements_by_id(subs, ID);
-        cout << "Subscription removed successfully" << endl;
+    }else{
+        cout << "no element with this id" << endl;
     }
 }
 
@@ -508,7 +487,6 @@ void storage::delete_sale(int ID)
     if (found_sale.has_value())
     {
         remove_elements_by_id(sales, ID);
-        cout << "sale removed successfully" << endl;
     }
 }
 
@@ -541,12 +519,6 @@ void storage::update_sale(int ID)
             }
         }
     }
-}
-
-void storage::subscribe()
-{
-    cout << "Here are a possible subscriptions: " << endl;
-    // to be continued
 }
 
 int storage::get_count_borrowed(int ID)

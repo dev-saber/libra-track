@@ -33,21 +33,12 @@ public:
     void show_book(int);
     void search();
 
-    void all_subs();
-    void show_sub(int);
-
-    void add_sub(subscription &);
-    void add_sub();
-    void update_sub(int);
-    void delete_sub(int);
-
     void buy_book();
     void show_all_sales();
     void show_sale_by_ID(int);
     void delete_sale(int);
     void update_sale(int);
 
-    void subscribe();
     void borrow_book();
 
     user add_user(string);
@@ -59,6 +50,9 @@ public:
     void show_all_borrowed();
     void check_to_change_is_active();
 
+    void show_sub(int);
+    void update_sub(int);
+    void delete_sub(int);
     void add_subscription();
     void show_all_subs();
 

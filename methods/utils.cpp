@@ -51,10 +51,19 @@ string check_Item_status(bool choice)
 template <class V, class I>
 void remove_elements_by_id(vector<V> &vector, I ID)
 {
-    vector.erase(remove_if(vector.begin(), vector.end(),
-                           [ID](const V &obj)
-                           { return obj.ID == ID; }),
-                 vector.end());
+     try
+    {
+        vector.erase(remove_if(vector.begin(), vector.end(),
+                                     [ID](const V &obj)
+                                     { return obj.ID == ID; }),
+                     vector.end());
+
+        cout << "Elements with ID " << ID << " successfully removed." << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "Error removing elements: " << e.what() << endl;
+    }
 };
 
 bool regex_search_pattern(string sentence, string search)
