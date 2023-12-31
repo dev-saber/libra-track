@@ -3,6 +3,7 @@
 
 class subscription_history
 {
+    friend class storage;
 private:
     int ID,ID_member, ID_subscription;
     time_t start_date, end_date;

@@ -83,7 +83,7 @@ bool check_member_active(optional<user *> &u)
     return false;
 }
 
-void update_member_active(std::optional<user *> &u, bool newActiveValue)
+void update_member_active(optional<user *> &u, bool newActiveValue)
 {
     if (u.has_value())
     {

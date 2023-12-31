@@ -58,4 +58,6 @@ public:
 
     int get_count_borrowed(int);
     void show_all_borrowed();
+    void check_to_change_is_active();
+
 };

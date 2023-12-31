@@ -9,6 +9,7 @@
 int main()
 {
     storage storage_instance;
+    
 
     book b1(1, "title 1", "auth 1", 4, false, 12),
         b2(2, "title 2", "auth 2", 1, true, 15.7),
@@ -17,19 +18,19 @@ int main()
 
     buyer bu(1, "sifeddineedr", " @ ", "0934", "buyer");
     member m1(2, "meryem", "yunogasai@gmail.com", "2345", "member", true);
-    member m2(3, "sifeddine", "yi@gmail.com", "45", "member", false);
+    member m2(3, "sifeddine", "yi@gmail.com", "45", "member", true);
 
     storage_instance.add_book(b1);
     storage_instance.add_book(b2);
     storage_instance.add_book(b4);
     storage_instance.add_book(b3);
-    storage_instance.add_book();
+    // storage_instance.add_book();
 
     storage_instance.all_books();
 
-    // storage_instance.add_new_user_row(bu);
-    // storage_instance.add_new_user_row(m1);
-    // storage_instance.add_new_user_row(m2);
+    storage_instance.add_new_user_row(bu);
+    storage_instance.add_new_user_row(m1);
+    storage_instance.add_new_user_row(m2);
 
     // storage_instance.show_all_user();
     // storage_instance.search();
@@ -37,7 +38,7 @@ int main()
     // storage_instance.show_book(1);
     // storage_instance.buy_book();
     // storage_instance.show_all_sales();
-    storage_instance.show_book(1);
+    // storage_instance.show_book(1);
 
     // storage_instance.show_all_sales();
     // storage_instance.show_sale_by_ID(1);
@@ -45,7 +46,7 @@ int main()
     // storage_instance.show_all_sales();
     // storage_instance.delete_sale(1);
     // storage_instance.show_all_sales();
-    // storage_instance.show_all_user();
+    storage_instance.show_all_user();
     // storage_instance.show_all_sales();
     // storage_instance.buy_book();
     // storage_instance.show_all_sales();
@@ -70,7 +71,9 @@ int main()
     // storage_instance.show_all_user();
     // cout << br;
 
+    storage_instance.check_to_change_is_active();
     
+    storage_instance.show_all_user();
 
     return 0;
 }

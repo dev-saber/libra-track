@@ -2,6 +2,7 @@
 #include "utils.cpp"
 #include <algorithm>
 #include <limits>
+#include <thread>
 
 int storage::id_generator = 1;
 int storage::ids_subs = 1;
@@ -22,37 +23,44 @@ void storage::add_book()
     getline(cin >> ws, b.title);
     cout << "Enter the book's author : ";
     getline(cin, b.author);
-    while (true) {
+    while (true)
+    {
         cout << "How many available copies : ";
         string copies_input;
         cin >> copies_input;
 
-        if (regex_match(copies_input, regex("\\d+"))) {
+        if (regex_match(copies_input, regex("\\d+")))
+        {
             b.available_copies = stoi(copies_input);
             break;
-        } else {
+        }
+        else
+        {
             cout << "Invalid input. Please enter a valid available copies number : ";
-            cin.clear(); 
+            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
 
-    
-    while (true) {
+    while (true)
+    {
         cout << "Enter Price of the Book : ";
         string price_input;
         cin >> price_input;
 
-        if (regex_match(price_input, regex("[+-]?([0-9]*[.])?[0-9]+"))) {
+        if (regex_match(price_input, regex("[+-]?([0-9]*[.])?[0-9]+")))
+        {
             b.price = stof(price_input);
             break;
-        } else {
+        }
+        else
+        {
             cout << "Invalid input. Please enter a valid Price : ";
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     }
-    
+
     do
     {
         cout << "Is the book sellable (yes / no) : ";
@@ -72,12 +80,11 @@ void storage::show_book(int ID)
     auto foundBook1 = find(books, ID);
     if (foundBook1.has_value())
     {
-                    cout << "---- Book " << " ----\n";
-
+        cout << "---- Book "
+             << " ----\n";
 
         cout << foundBook1.value() << endl;
-                    cout << "-----------------------------\n";
-
+        cout << "-----------------------------\n";
     }
     else
     {
@@ -95,21 +102,18 @@ void storage::all_books()
     }
     else
     {
-      
-        cout << "Number of books in the library: "<< books.size() << endl;
+
+        cout << "Number of books in the library: " << books.size() << endl;
         for (int i = 0; i < books.size(); i++)
         {
             cout << "---- Book " << i + 1 << " ----\n";
             cout << books[i] << endl;
             cout << "-----------------------------\n";
         }
-        
-        
     }
 
     cout << "===========================\n";
 }
-
 
 void storage::update_book(int ID)
 {
@@ -220,7 +224,6 @@ void storage::add_sub(subscription &s)
 {
     subs.push_back(s);
 }
-
 
 void storage::add_sub()
 {
@@ -684,5 +687,36 @@ void storage::update_user(int ID)
     else
     {
         cout << "No user with the given ID" << endl;
+    }
+}
+
+void storage::check_to_change_is_active()
+{
+    while (true)
+    {
+        if (subs_history.size() > 0)
+        {
+            for (subscription_history &sub : subs_history)
+            {
+
+                if (sub.is_expired())
+                {
+                    cout << "The subscription of the member with the ID" << sub.ID_member << " has expired." << endl;
+                    //    call update member
+
+                    auto found_member = find_user_pointers(users, sub.ID_member);
+
+                    bool is_active_getter = check_member_active(found_member);
+
+                    update_member_active(found_member, is_active_getter);
+                }
+                else
+                {
+                    cout << "The subscription is active." << endl;
+                }
+            }
+        }
+        // Delay for 24 hours (86400 seconds)
+           this_thread::sleep_for(chrono::hours(24));
     }
 }
