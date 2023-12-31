@@ -32,6 +32,7 @@ int main()
     storage_instance.add_new_user_row(m1);
     storage_instance.add_new_user_row(m2);
 
+    storage_instance.update_book(2);
     // storage_instance.show_all_user();
     // storage_instance.search();
 
@@ -46,7 +47,7 @@ int main()
     // storage_instance.show_all_sales();
     // storage_instance.delete_sale(1);
     // storage_instance.show_all_sales();
-    storage_instance.show_all_user();
+    // storage_instance.show_all_user();
     // storage_instance.show_all_sales();
     // storage_instance.buy_book();
     // storage_instance.show_all_sales();
@@ -71,9 +72,11 @@ int main()
     // storage_instance.show_all_user();
     // cout << br;
 
-    storage_instance.check_to_change_is_active();
+    // storage_instance.check_to_change_is_active();
+    // 
+    storage_instance.show_book(2);
+    storage_instance.all_books();
     
-    storage_instance.show_all_user();
 
     return 0;
 }

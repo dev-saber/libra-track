@@ -117,12 +117,12 @@ void storage::all_books()
 
 void storage::update_book(int ID)
 {
-    this->show_book(ID);
     auto found_book = find(books, ID);
 
     if (found_book.has_value())
     {
         string title_inp, author_inp, a_copies_inp, is_sellable_inp, price_inp;
+        float price_new_value;
 
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
@@ -132,11 +132,52 @@ void storage::update_book(int ID)
         getline(cin, author_inp);
         cout << "Update price (" << found_book.value().price << ") : ";
         getline(cin, price_inp);
-        cout << "Update available copies ( " << found_book.value().available_copies << ") : ";
+
+        while (!price_inp.empty())
+        {
+
+            if (regex_match(price_inp, regex("[+-]?([0-9]*[.])?[0-9]+")))
+            {
+                break;
+            }
+            else
+            {
+                cout << "Invalid input. Please enter a valid price : ";
+                cin.clear();
+                getline(cin, price_inp);
+            }
+        }
+
+        cout << "Update available copies ( " << found_book.value().available_copies << " ) : ";
         getline(cin, a_copies_inp);
-        cout << "Change book status ( from " << check_Item_status(found_book.value().is_sellable) << " to " << check_Item_status(!found_book.value().is_sellable) << ")   (yes/no): ";
+
+        while (!a_copies_inp.empty())
+        {
+
+            if (regex_match(a_copies_inp, regex("[+-]?([0-9]*[.])?[0-9]+")))
+            {
+                break;
+            }
+            else
+            {
+                cout << "Invalid input. Please enter a valid number of available copies : ";
+                cin.clear();
+                getline(cin, a_copies_inp);
+            }
+        }
+
+            do
+    {
+         cin.clear();
+        cout << "Change book status ( from " << check_Item_status(found_book.value().is_sellable) << " to " << check_Item_status(!found_book.value().is_sellable) << " ) (yes/no): ";
+
         getline(cin, is_sellable_inp);
+        is_sellable_inp = string_to_lower(is_sellable_inp);
+    } while ( is_sellable_inp != "yes" && is_sellable_inp != "no" && !is_sellable_inp.empty());
+        
+        
         cout << "-----------------------------------------------------" << endl;
+
 
         for (book &book : books)
         {
@@ -145,15 +186,13 @@ void storage::update_book(int ID)
                 book.title = title_inp.empty() ? found_book->title : title_inp;
                 book.author = author_inp.empty() ? found_book->author : author_inp;
                 book.available_copies = a_copies_inp.empty() ? found_book->available_copies : stoi(a_copies_inp);
-                book.price = price_inp.empty() ? found_book->price : stoi(price_inp);
-                bool check = is_sellable_inp == "yes" ? !found_book->is_sellable : found_book->is_sellable;
+                book.price = price_inp.empty() ? found_book->price :stof(price_inp);
+                bool check = string_to_lower(is_sellable_inp) == "yes" ? !found_book->is_sellable : found_book->is_sellable;
                 book.is_sellable = is_sellable_inp.empty() ? found_book->is_sellable : check;
 
                 break;
             }
         }
-
-        this->show_book(ID);
     }
 }
 
@@ -381,12 +420,6 @@ void storage::buy_book()
             }
             else
             {
-                // auto derivedMember = dynamic_cast<member *>(found_member.value());
-                // if (derivedMember)
-                // {
-
-                //     is_active_bool = derivedMember->get_is_active() == false ? false : true;
-                // }
                 is_active_bool = check_member_active(found_member);
             }
         } while (!is_found);
@@ -443,8 +476,6 @@ void storage::show_all_sales()
     {
         for (buy_history &purchase : sales)
         {
-
-            // purchase.show_sale();
             cout << purchase;
         }
     }
@@ -465,7 +496,6 @@ void storage::show_sale_by_ID(int ID)
         {
             if (sale.ID_buyer == ID)
             {
-                // sale.show_sale();
                 cout << sale;
             }
         }
@@ -717,6 +747,6 @@ void storage::check_to_change_is_active()
             }
         }
         // Delay for 24 hours (86400 seconds)
-           this_thread::sleep_for(chrono::hours(24));
+        this_thread::sleep_for(chrono::hours(24));
     }
 }
