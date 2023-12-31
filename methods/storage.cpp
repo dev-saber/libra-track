@@ -1,6 +1,7 @@
 #include "../classes/storage.h"
 #include "utils.cpp"
 #include <algorithm>
+#include <limits>
 
 int storage::id_generator = 1;
 int storage::ids_subs = 1;
@@ -17,30 +18,52 @@ void storage::add_book()
     book b;
     string bool_input;
     cout << "=== Add New Book ===\n";
-
     cout << "Enter a title book : ";
     getline(cin >> ws, b.title);
     cout << "Enter the book's author : ";
     getline(cin, b.author);
-    cout << "How many available copies : ";
-    cin >> b.available_copies;
-    cout << "Enter Price of the Book : ";
-    cin >> b.price;
+    while (true) {
+        cout << "How many available copies : ";
+        string copies_input;
+        cin >> copies_input;
 
+        if (regex_match(copies_input, regex("\\d+"))) {
+            b.available_copies = stoi(copies_input);
+            break;
+        } else {
+            cout << "Invalid input. Please enter a valid available copies number : ";
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+
+    
+    while (true) {
+        cout << "Enter Price of the Book : ";
+        string price_input;
+        cin >> price_input;
+
+        if (regex_match(price_input, regex("[+-]?([0-9]*[.])?[0-9]+"))) {
+            b.price = stof(price_input);
+            break;
+        } else {
+            cout << "Invalid input. Please enter a valid Price : ";
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        }
+    }
+    
     do
     {
         cout << "Is the book sellable (yes / no) : ";
         cin >> bool_input;
+        bool_input = string_to_lower(bool_input);
         cin.ignore();
     } while (bool_input != "yes" && bool_input != "no");
-
     b.is_sellable = "yes" ? true : false;
     b.ID = id_generator;
-
     books.push_back(b);
     id_generator++;
-
-    // add later an if statement wether we add a new book or not (the fct calls itself)
 }
 
 void storage::show_book(int ID)
@@ -69,12 +92,13 @@ void storage::all_books()
     {
         for (book &b : books)
         {
-            cout << b << "\n \n";
+            cout << b << endl;
         }
     }
 
     cout << "===========================\n";
 }
+
 
 void storage::update_book(int ID)
 {
@@ -185,6 +209,7 @@ void storage::add_sub(subscription &s)
 {
     subs.push_back(s);
 }
+
 
 void storage::add_sub()
 {

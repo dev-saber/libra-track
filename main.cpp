@@ -2,9 +2,10 @@
 #include "methods/buy_history.cpp"
 #include "methods/borrow_history.cpp"
 #include "methods/subscription.cpp"
+#include "methods/subscription_history.cpp"
 #include "methods/user.cpp"
 #include "methods/storage.cpp"
-
+#include <thread>
 int main()
 {
     storage storage_instance;
@@ -18,16 +19,16 @@ int main()
     member m1(2, "meryem", "yunogasai@gmail.com", "2345", "member", true);
     member m2(3, "sifeddine", "yi@gmail.com", "45", "member", false);
 
-    storage_instance.add_book(b1);
-    storage_instance.add_book(b3);
-    storage_instance.add_book(b2);
-    storage_instance.add_book(b4);
+    // storage_instance.add_book(b1);
+    // storage_instance.add_book(b3);
+    storage_instance.add_book();
+    storage_instance.add_book();
 
-    // storage_instance.all_books();
+    storage_instance.all_books();
 
-    storage_instance.add_new_user_row(bu);
-    storage_instance.add_new_user_row(m1);
-    storage_instance.add_new_user_row(m2);
+    // storage_instance.add_new_user_row(bu);
+    // storage_instance.add_new_user_row(m1);
+    // storage_instance.add_new_user_row(m2);
 
     // storage_instance.show_all_user();
     // storage_instance.search();
@@ -35,7 +36,7 @@ int main()
     // storage_instance.show_book(1);
     // storage_instance.buy_book();
     // storage_instance.show_all_sales();
-    // storage_instance.show_book(1);
+    storage_instance.show_book(1);
 
     // storage_instance.show_all_sales();
     // storage_instance.show_sale_by_ID(1);
@@ -67,6 +68,8 @@ int main()
     // storage_instance.update_user(3);
     // storage_instance.show_all_user();
     // cout << br;
+
+    
 
     return 0;
 }
