@@ -795,8 +795,8 @@ void storage::add_subscription_record(int member_id)
     if (found_sub.has_value())
     {
         sh.ID = subscription_history::subs_history_id;
-        sh.ID_member=member_id;
-        sh.ID_subscription=sub_id;
+        sh.ID_member = member_id;
+        sh.ID_subscription = sub_id;
         subs_history.push_back(sh);
         subscription_history::subs_history_id++;
     }
@@ -823,5 +823,27 @@ void storage::show_all_sub_history()
     for (subscription_history sh : subs_history)
     {
         cout << sh;
+    }
+}
+
+void storage::renew_subscription(int ID)
+{
+    auto found_member = find_user_pointers(users, ID);
+    if (found_member.has_value())
+    {
+        if (found_member.value()->role == "member" && check_member_active(found_member) == false)
+        {
+            update_member_active(found_member, false);
+            add_subscription_record(ID);
+            cout << "Member subscription renewed successfully" << endl;
+        }
+        else
+        {
+            cout << "Member subscription hasn't ended yet." << endl;
+        }
+    }
+    else
+    {
+        cout << "Member with the given id not found." << endl;
     }
 }
