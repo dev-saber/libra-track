@@ -60,5 +60,5 @@ public:
     void show_sub_history(int);
     void show_all_sub_history();
     void renew_subscription(int);
-
+    void update_sub_history();
 };

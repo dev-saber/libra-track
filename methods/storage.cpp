@@ -6,7 +6,6 @@
 
 int storage::id_generator = 1;
 int storage::ids_subs = 1;
-int buy_history::ids_sales = 1;
 int user::user_id = 1;
 
 void storage::add_book(book &b)
@@ -380,7 +379,7 @@ int storage::add_new_user_row(user &u)
 
 void storage::buy_book()
 {
-    int book_id, user_id, role_inp;
+    int book_id, user_id, role_inp, quantity_inp;
     bool is_active_bool = true;
 
     cout << "enter the role (member 1 - buyer 0): ";
@@ -419,13 +418,19 @@ void storage::buy_book()
 
     if (foundBook.has_value() && (foundBook.value().is_sellable == true) && (foundBook.value().available_copies > 0) && is_active_bool)
     {
+        do
+        {
+            // regex later
+            cout << "Enter the quantity: ";
+            cin >> quantity_inp;
+        } while (quantity_inp > foundBook.value().available_copies || quantity_inp <=0);
 
         for (book &book : books)
         {
             if (book.ID == book_id)
             {
-                book.available_copies--;
-                buy_history bh(buy_history::ids_sales, book_id, user_id, book.price);
+                book.available_copies-=quantity_inp;
+                buy_history bh(book_id, user_id, book.price,quantity_inp);
                 sales.push_back(bh);
                 buy_history::ids_sales++;
 
@@ -622,13 +627,7 @@ void storage::show_all_user()
     }
 }
 
-// void borrow_history::show_borrow(){
-//     cout << ID << endl;
-//     cout << ID_member<< endl;
-//     cout << ID_book<< endl;
-//     cout << ctime(&borrow_date)<< endl;
-//     cout <<ctime(&return_date)<< endl;
-//     is_returned ? cout << "not returned yet " : cout << "returned back"<< endl;
+
 
 // }
 void storage::show_all_borrowed()

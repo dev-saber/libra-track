@@ -10,13 +10,13 @@ int main()
 {
     storage storage_instance;
     
-    storage_instance.add_subscription();
-    storage_instance.add_subscription();
+    // storage_instance.add_subscription();
+    // storage_instance.add_subscription();
 
-    book b1(1, "title 1", "auth 1", 4, false, 12),
+    book b1(1, "title 1", "auth 1", 4, true, 12),
         b2(2, "title 2", "auth 2", 1, true, 15.7),
-        b3(3, "title 3", "auth 1", 1, false, 18.9),
-        b4(4, "title 4", "auth 2", 0, false, 18.9);
+        b3(3, "title 3", "auth 1", 1, true, 18.9),
+        b4(4, "title 4", "auth 2", 0, true, 18.9);
 
     buyer bu(1, "sifeddineedr", " @ ", "0934", "buyer");
     member m1(2, "meryem", "yunogasai@gmail.com", "2345", "member", true);
@@ -39,10 +39,14 @@ int main()
     // storage_instance.delete_sub(199);
 
     // storage_instance.show_all_subs();
-    storage_instance.show_all_user();
-    storage_instance.renew_subscription(2);
-    storage_instance.show_all_user();
+    // storage_instance.show_all_user();
+    // storage_instance.renew_subscription(2);
+    // storage_instance.show_all_user();
     
-    storage_instance.show_all_sub_history();
+    // storage_instance.show_all_sub_history();
+
+    storage_instance.all_books();
+    storage_instance.buy_book();
+    storage_instance.all_books();
     return 0;
 }

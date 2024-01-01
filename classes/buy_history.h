@@ -17,11 +17,12 @@ private:
     int ID_book;
     int ID_buyer;
     double price;
+    int quantity;
     time_t created_at;
 
 public:
     static int ids_sales;
-    buy_history(int,int, int, double);
+    buy_history(int, int, double, int);
     void show_sale();
 
 };
