@@ -21,7 +21,7 @@ private:
     time_t created_at;
 
 public:
-    static int ids_sales;
+    static int sale_id;
     buy_history(int, int, double, int);
     void show_sale();
 

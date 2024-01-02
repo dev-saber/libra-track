@@ -4,9 +4,6 @@
 #include <limits>
 #include <thread>
 
-int storage::id_generator = 1;
-int storage::ids_subs = 1;
-int user::user_id = 1;
 
 void storage::add_book(book &b)
 {
@@ -69,9 +66,9 @@ void storage::add_book()
     } while (bool_input != "yes" && bool_input != "no");
 
     b.is_sellable = "yes" ? true : false;
-    b.ID = id_generator;
+    b.ID = book::book_id;
     books.push_back(b);
-    id_generator++;
+    book::book_id++;
 }
 
 void storage::show_book(int ID)
@@ -432,7 +429,7 @@ void storage::buy_book()
                 book.available_copies-=quantity_inp;
                 buy_history bh(book_id, user_id, book.price,quantity_inp);
                 sales.push_back(bh);
-                buy_history::ids_sales++;
+                buy_history::sale_id++;
 
                 cout << "new row has been added to the fake database" << endl;
                 break;

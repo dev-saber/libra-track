@@ -12,7 +12,6 @@ class storage
     friend bool regex_search_pattern(string, string);
     friend bool check_member_active(optional<user *> &);
     friend void update_member_active(std::optional<user *> &u, bool newActiveValue);
-    // friend void check_to_change_is_active();
 
 private:
     vector<book> books;
@@ -23,8 +22,7 @@ private:
     vector<subscription_history> subs_history;
 
 public:
-    static int id_generator;
-    static int ids_subs;
+
     void add_book(book &);
     void add_book();
     void update_book(int);

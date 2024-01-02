@@ -27,6 +27,7 @@ private:
     double price;
 
 public:
+    static int book_id;
     book(int, string, string, int, bool,double);
     book();
 };

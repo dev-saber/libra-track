@@ -5,7 +5,7 @@
 user::user() : ID(0), full_name(""), email(""), phone(""), role(""){};
 user::user(int id, string fn, string em, string ph, string r) : ID(id), full_name(fn), email(em), phone(ph), role(r){};
 user::user(user &u) : ID(u.ID), full_name(u.full_name), email(u.email), phone(u.phone), role(u.role){};
-
+int user::user_id=1;
 void user::output()
 {
     cout << "user id: " << ID << endl;
