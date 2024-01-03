@@ -1,7 +1,6 @@
 #include "../classes/storage.h"
 #include "utils.cpp"
 #include <algorithm>
-#include <limits>
 #include <thread>
 
 
@@ -551,7 +550,9 @@ void storage::borrow_book()
     auto foundBook = find(books, book_id);
     // add checking existance of user
     auto found_user = find_user_pointers(users, user_id);
-    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0 && get_count_borrowed(user_id) < 3)
+    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true 
+    && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0
+     && get_count_borrowed(user_id) < 3)
     {
         for (book &book : books)
         {
@@ -567,7 +568,6 @@ void storage::borrow_book()
     }
     else
     {
-        // (!found_user.has_value() || found_user.value()->role != "member") ? cout << "No member with that ID" << endl : (!foundBook.has_value() ? cout << "The book isn't available" << endl : (foundBook.value().is_sellable ? cout << "Book not for borrow" << endl : (!check_member_active(found_user) ? cout << "Member not active" << endl : (foundBook.value().available_copies == 0 ? cout << "No available copies in stock" : cout << "Couldn't borrow already borrowed books without return" << endl))));
 
         if (!found_user.has_value() || found_user.value()->role != "member")
         {
@@ -632,7 +632,6 @@ void storage::show_all_borrowed()
     {
         for (borrow_history &b : borrows)
         {
-            // b.show_borrow();
             cout << b;
         }
     }
@@ -845,7 +844,7 @@ void storage::show_user(int ID)
 {
 
     cout << "===========================\n";
-    auto found_user = find(users, ID);
+    auto found_user = find_user_pointers(users, ID);
     if (found_user.has_value())
     {
        found_user.value()->output();
