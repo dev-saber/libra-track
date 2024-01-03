@@ -23,7 +23,6 @@ private:
 
 public:
 
-    void add_book(book &);
     void add_book();
     void update_book(int);
     void delete_book(int);
@@ -32,6 +31,7 @@ public:
     void search();
 
     void buy_book();
+    
     void show_all_sales();
     void show_sale_by_ID(int);
     void delete_sale(int);
@@ -59,5 +59,5 @@ public:
     void show_sub_history(int);
     void show_all_sub_history();
     void renew_subscription(int);
-    void update_sub_history();
+    void update_sub_history(int);
 };

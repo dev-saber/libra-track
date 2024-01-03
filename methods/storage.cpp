@@ -3,12 +3,6 @@
 #include <algorithm>
 #include <thread>
 
-
-void storage::add_book(book &b)
-{
-    books.push_back(b);
-}
-
 void storage::add_book()
 {
     book b;
@@ -196,8 +190,6 @@ void storage::delete_book(int ID)
     {
 
         remove_elements_by_id(books, ID);
-
-
     }
 }
 
@@ -418,14 +410,14 @@ void storage::buy_book()
             // regex later
             cout << "Enter the quantity: ";
             cin >> quantity_inp;
-        } while (quantity_inp > foundBook.value().available_copies || quantity_inp <=0);
+        } while (quantity_inp > foundBook.value().available_copies || quantity_inp <= 0);
 
         for (book &book : books)
         {
             if (book.ID == book_id)
             {
-                book.available_copies-=quantity_inp;
-                buy_history bh(book_id, user_id, book.price,quantity_inp);
+                book.available_copies -= quantity_inp;
+                buy_history bh(book_id, user_id, book.price, quantity_inp);
                 sales.push_back(bh);
                 buy_history::sale_id++;
 
@@ -468,8 +460,6 @@ void storage::show_all_sales()
 
 void storage::show_sale_by_ID(int ID)
 {
-    // add checking user exixstence
-
     auto found_user = find_user_pointers(users, ID);
     if (found_user.has_value())
     {
@@ -499,7 +489,7 @@ void storage::update_sale(int ID)
 
     if (found_sale.has_value())
     {
-        string ID_book_inp = "", ID_buyer_inp = "", price_inp = "";
+        string ID_book_inp = "", ID_buyer_inp = "", price_inp = "", quantity_inp = "0";
 
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
@@ -509,15 +499,34 @@ void storage::update_sale(int ID)
         getline(cin, ID_buyer_inp);
         cout << "Update price (" << found_sale.value().price << ") : ";
         getline(cin, price_inp);
+        cout << "Update quantity (" << found_sale.value().quantity << ") : ";
+        getline(cin, quantity_inp);
         cout << "-----------------------------------------------------" << endl;
+
+        if (!ID_book_inp.empty())
+        {
+            for (book &b : books)
+            {
+                if (b.ID == found_sale.value().ID_book)
+                {
+                    b.available_copies += found_sale.value().quantity;
+                    break;
+                }
+                
+            }
+            
+        }
+        
 
         for (buy_history &sale : sales)
         {
             if (sale.ID == ID)
             {
+                // ID_book_inp.empty() ? sale.
                 sale.ID_book = ID_book_inp.empty() ? found_sale->ID_book : stoi(ID_book_inp);
                 sale.ID_buyer = ID_buyer_inp.empty() ? found_sale->ID_buyer : stoi(ID_buyer_inp);
                 sale.price = price_inp.empty() ? found_sale->price : stof(price_inp);
+                sale.quantity += quantity_inp.empty() ? found_sale->quantity : stof(quantity_inp);
                 break;
             }
         }
@@ -548,11 +557,8 @@ void storage::borrow_book()
     cin >> user_id;
 
     auto foundBook = find(books, book_id);
-    // add checking existance of user
     auto found_user = find_user_pointers(users, user_id);
-    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true 
-    && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0
-     && get_count_borrowed(user_id) < 3)
+    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0 && get_count_borrowed(user_id) < 3)
     {
         for (book &book : books)
         {
@@ -623,9 +629,6 @@ void storage::show_all_user()
     }
 }
 
-
-
-// }
 void storage::show_all_borrowed()
 {
     if (!borrows.empty())
@@ -671,7 +674,7 @@ void storage::update_user(int ID)
                 u->full_name = full_name_inp.empty() ? u->full_name : full_name_inp;
                 u->email = email_inp.empty() ? u->email : email_inp;
                 u->phone = phone_inp.empty() ? u->phone : phone_inp;
-                //    found_user.value()->role=="member" ?  update_member_active(found_user,is_active_inp): void(0);
+
                 if (found_user.value()->role == "member")
                 {
                     is_active_inp == 1 ? true : false;
@@ -847,11 +850,16 @@ void storage::show_user(int ID)
     auto found_user = find_user_pointers(users, ID);
     if (found_user.has_value())
     {
-       found_user.value()->output();
+        found_user.value()->output();
     }
     else
     {
         cout << "Element not found." << endl;
     }
     cout << "===========================\n";
+}
+
+
+void storage::update_sub_history(int ID){
+
 }

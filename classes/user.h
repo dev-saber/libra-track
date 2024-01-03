@@ -28,7 +28,6 @@ public:
 
 class buyer : public user
 {
-    // friend class storage;
 
 public:
     buyer(int, string, string, string, string);
@@ -38,7 +37,6 @@ public:
 
 class member : public buyer
 {
-    // friend class storage;
     bool is_active;
 
 public:
@@ -48,4 +46,14 @@ public:
     void output();
     bool get_is_active();
     void set_is_active(bool);
+};
+
+class admin
+{
+private:
+    string username, password;
+public:
+    admin();
+   void login();
+   void logout();
 };
