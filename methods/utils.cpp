@@ -110,24 +110,3 @@ string string_to_lower(string s){
     return s;
 }
 
-// void check_to_change_is_active(vector<subscription_history> subs){
-//     while (true) {
-
-//         for (subscription_history &sub : subs)
-//         {
-            
-//         if (sub.is_expired()) {
-//            cout << "The subscription has expired." <<endl;
-//             break; // Exit the loop if expired
-//         } else {
-//            cout << "The subscription is active." <<endl;
-//         }
-
-//         // Delay for 24 hours (86400 seconds)
-//        this_thread::sleep_for(std::chrono::hours(24));
-            
-//         }
-        
-
-//     }
-// }

@@ -43,6 +43,7 @@ public:
     void show_all_user();
     int add_new_user_row(user &);
     void update_user(int);
+    void show_user(int);
 
     int get_count_borrowed(int);
     void show_all_borrowed();
@@ -51,7 +52,7 @@ public:
     void show_sub(int);
     void update_sub(int);
     void delete_sub(int);
-    void add_subscription();
+    void add_sub();
     void show_all_subs();
     
     void add_subscription_record(int);

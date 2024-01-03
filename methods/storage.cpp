@@ -198,8 +198,7 @@ void storage::delete_book(int ID)
 
         remove_elements_by_id(books, ID);
 
-        // try except is remove
-        // cout << "Book removed successfully" << endl;
+
     }
 }
 
@@ -702,7 +701,6 @@ void storage::check_to_change_is_active()
                 if (sub.is_expired())
                 {
                     cout << "The subscription of the member with the ID" << sub.ID_member << " has expired." << endl;
-                    //    call update member
 
                     auto found_member = find_user_pointers(users, sub.ID_member);
 
@@ -716,12 +714,11 @@ void storage::check_to_change_is_active()
                 }
             }
         }
-        // Delay for 24 hours (86400 seconds)
         this_thread::sleep_for(chrono::hours(24));
     }
 }
 
-void storage::add_subscription()
+void storage::add_sub()
 {
     subscription s;
 
@@ -842,4 +839,20 @@ void storage::renew_subscription(int ID)
     {
         cout << "Member with the given id not found." << endl;
     }
+}
+
+void storage::show_user(int ID)
+{
+
+    cout << "===========================\n";
+    auto found_user = find(users, ID);
+    if (found_user.has_value())
+    {
+       found_user.value()->output();
+    }
+    else
+    {
+        cout << "Element not found." << endl;
+    }
+    cout << "===========================\n";
 }
