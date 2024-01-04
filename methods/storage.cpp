@@ -483,7 +483,7 @@ void storage::buy_book()
         user user_instance;
         user_instance = add_user("buyer");
         user_id = add_new_user_row(user_instance);
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        // cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     while (true)
@@ -642,6 +642,7 @@ void storage::delete_sale(int ID)
 //         }
 //     }
 // }
+
 void storage::update_sale(int ID)
 {
     auto found_sale = find(sales, ID);
@@ -652,84 +653,120 @@ void storage::update_sale(int ID)
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
-        cout << "Update ID_book  (" << found_sale.value().ID_book << ") : ";
+
+        bool invalidInput = false;
+
+        // Update ID_book
         do
         {
+            if (invalidInput)
+            {
+                cout << "Invalid input. Please re-enter: ";
+            }
+
+            cout << "Update ID_book  (" << found_sale.value().ID_book << ") : ";
             getline(cin >> ws, ID_book_inp);
+
+            invalidInput = false;
 
             if (!ID_book_inp.empty() && !regex_match(ID_book_inp, regex("\\d+")))
             {
-                cout << "Invalid input. Please enter a valid integer for ID_book: ";
+                cout << "Invalid input. Please enter a valid integer for ID_book.";
+                invalidInput = true;
             }
             else if (!ID_book_inp.empty() && !find(books, stoi(ID_book_inp)).has_value())
             {
-                cout << "Book with ID " << ID_book_inp << " does not exist. Please re-enter: ";
+                cout << "Book with ID " << ID_book_inp << " does not exist.";
+                invalidInput = true;
             }
-        } while (!ID_book_inp.empty() && (!regex_match(ID_book_inp, regex("\\d+")) || !find(books, stoi(ID_book_inp)).has_value()));
-        cout << "Update ID_buyer (" << found_sale.value().ID_buyer << ") : ";
+        } while (!ID_book_inp.empty() && invalidInput);
 
-        // Input validation for ID_buyer
+        // Update ID_buyer
+        invalidInput = false;
         do
         {
-            getline(cin, ID_buyer_inp);
+            if (invalidInput)
+            {
+                cout << "Invalid input. Please re-enter: ";
+            }
+
+            cout << "Update ID_buyer (" << found_sale.value().ID_buyer << ") : ";
+            getline(cin >> ws, ID_buyer_inp);
+
+            invalidInput = false;
 
             if (!ID_buyer_inp.empty() && !regex_match(ID_buyer_inp, regex("\\d+")))
             {
-                cout << "Invalid input. Please enter a valid integer for ID_buyer: ";
+                cout << "Invalid input. Please enter a valid integer for ID_buyer.";
+                invalidInput = true;
             }
             else if (!ID_buyer_inp.empty() && !find_user_pointers(users, stoi(ID_buyer_inp)).has_value())
             {
-                cout << "Buyer with ID " << ID_buyer_inp << " does not exist. Please re-enter: ";
+                cout << "Buyer with ID " << ID_buyer_inp << " does not exist.";
+                invalidInput = true;
             }
-        } while (!ID_buyer_inp.empty() && (!regex_match(ID_buyer_inp, regex("\\d+")) || !find_user_pointers(users, stoi(ID_buyer_inp)).has_value()));
+        } while (!ID_buyer_inp.empty() && invalidInput);
 
-        cout << "Update price (" << found_sale.value().price << ") : ";
-
-        cout << "Update price (" << found_sale.value().price << ") : ";
-
-        // Input validation for price
+        // Update price (you have a duplicated line here, fix it)
+        invalidInput = false;
         do
         {
+            if (invalidInput)
+            {
+                cout << "Invalid input. Please re-enter: ";
+            }
+
+            cout << "Update price (" << found_sale.value().price << ") : ";
             getline(cin, price_inp);
+
+            invalidInput = false;
 
             if (!price_inp.empty() && !regex_match(price_inp, regex("[+-]?([0-9]*[.])?[0-9]+")))
             {
-                cout << "Invalid input. Please enter a valid float for price: ";
+                cout << "Invalid input. Please enter a valid float for price.";
+                invalidInput = true;
             }
-        } while (!price_inp.empty() && !regex_match(price_inp, regex("[+-]?([0-9]*[.])?[0-9]+")));
+        } while (!price_inp.empty() && invalidInput);
 
-        cout << "Update quantity (" << found_sale.value().quantity << ") : ";
-
-        // Input validation for quantity
+        // Update quantity (you have a duplicated line here, fix it)
+        invalidInput = false;
         do
         {
+            if (invalidInput)
+            {
+                cout << "Invalid input. Please re-enter: ";
+            }
+
+            cout << "Update quantity (" << found_sale.value().quantity << ") : ";
             getline(cin, quantity_inp);
+
+            invalidInput = false;
 
             if (!quantity_inp.empty() && !regex_match(quantity_inp, regex("[+-]?([0-9]*[.])?[0-9]+")))
             {
-                cout << "Invalid input. Please enter a valid float for quantity: ";
+                cout << "Invalid input. Please enter a valid float for quantity.";
+                invalidInput = true;
             }
-        } while (!quantity_inp.empty() && !regex_match(quantity_inp, regex("[+-]?([0-9]*[.])?[0-9]+")));
+        } while (!quantity_inp.empty() && invalidInput);
 
         // If the user provided a new ID_book, adjust the corresponding book's available copies
-        // if (!ID_book_inp.empty())
-        // {
-        //     for (book &b : books)
-        //     {
-        //         if (b.ID == found_sale.value().ID_book)
-        //         {
-        //             b.available_copies += found_sale.value().quantity; // Increase old book's available copies
-        //             break;
-        //         }
-        //     }
-        // }
+        if (!ID_book_inp.empty())
+        {
+            for (book &b : books)
+            {
+                if (b.ID == found_sale.value().ID_book)
+                {
+                    b.available_copies += found_sale.value().quantity; // Increase old book's available copies
+                    break;
+                }
+            }
+        }
 
         // Update sale information
         for (buy_history &sale : sales)
         {
             if (sale.ID == ID)
             {
-
                 // Update ID_book if provided, otherwise keep the current value
                 sale.ID_book = ID_book_inp.empty() ? found_sale->ID_book : stoi(ID_book_inp);
 
@@ -741,15 +778,18 @@ void storage::update_sale(int ID)
 
                 // Update quantity if provided, otherwise keep the current value
                 sale.quantity = quantity_inp.empty() ? found_sale->quantity : stof(quantity_inp);
+
+                // Decrease old book's available copies
                 for (book &b : books)
                 {
                     if (b.ID == found_sale.value().ID_book)
                     {
-                        b.available_copies -= stof(quantity_inp); // Decrease old book's available copies
+                        b.available_copies -= stof(quantity_inp);
                     }
+                    // Increase new book's available copies
                     else if (b.ID == stoi(ID_book_inp))
                     {
-                        b.available_copies += sale.quantity; // Increase new book's available copies
+                        b.available_copies += stof(quantity_inp);
                     }
                 }
 
