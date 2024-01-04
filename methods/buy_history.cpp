@@ -7,6 +7,7 @@ ostream &operator<<(ostream &o,const buy_history &bh)
     o << "  Book ID: " << bh.ID_book << "\n";
     o << "  Buyer ID: " << bh.ID_buyer << "\n";
     o << "  Price:" << bh.price << "\n";
+    o << "  Quantity:" << bh.quantity << "\n";
     o << "  Created At: " << ctime(&bh.created_at);
     return o;
 }

@@ -67,8 +67,7 @@ void admin::login()
 
         cout << "Incorrect credentials. Please reenter your username and password." << endl;
         
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+       
     }
 }
 

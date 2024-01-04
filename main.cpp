@@ -209,7 +209,9 @@ int main()
             break;
         default:
             cout << "Invalid choice. Please try again." << endl;
+            break;
         }
+         
     } while (choice != 0);
     // storage_instance.check_to_change_is_active();
 
