@@ -58,7 +58,7 @@ void storage::add_book()
         cin.ignore();
     } while (bool_input != "yes" && bool_input != "no");
 
-    b.is_sellable = bool_input=="yes" ? true : false;
+    b.is_sellable = bool_input == "yes" ? true : false;
     b.ID = book::book_id;
     books.push_back(b);
     book::book_id++;
@@ -194,135 +194,135 @@ void storage::delete_book(int ID)
     }
 }
 
- void storage::search()
- {
-     string author, title, is_sellable_inp, is_sellable;
-     bool query_condition = true;
- 
-     do
-     {
-         cout << "Press enter to keep the current value unchanged." << endl;
-         cout << "-----------------------------------------------------" << endl;
-         cout << "Enter the title : ";
-         getline(cin, title);
-         cout << "Enter the author : ";
-         getline(cin, author);
-         cout << "Is the book for sell (yes/no) : ";
-         getline(cin, is_sellable_inp);
- 
-         title = title.empty() ? "" : title;
-         author = author.empty() ? "" : author;
- 
-     } while (author == "" && title == "");
-     bool found = false;
- 
-     for (auto book : books)
-     {
-         query_condition = true;
- 
-         if (!title.empty())
-         {
-             query_condition = query_condition && regex_search_pattern(book.title, title);
-         }
- 
-         if (!author.empty())
-         {
-             query_condition = query_condition && regex_search_pattern(book.author, author);
-         }
- 
-         if (is_sellable_inp == "yes")
-         {
-             query_condition = query_condition && (book.is_sellable == true);
-         }
- 
-         if (is_sellable_inp == "no")
-         {
-             query_condition = query_condition && (book.is_sellable == false);
-         }
- 
-         if (query_condition)
-         {
-             cout << "================ Books Found ================" << endl;
-             cout << book << endl;
-             found = true;
-         }
-     }
-     if (!found)
-     {
-         cout << "No books match the given criteria." << endl;
-     }
- }
- 
- void storage::show_sub(int ID)
- {
-     cout << "=========================== Subscription Details ===========================\n";
-     auto found_sub = find(subs, ID);
-     if (found_sub.has_value())
-     {
-         cout << "------------------- Subscription " << ID << "----------------------\n";
-         cout << found_sub.value() << endl;
-     }
-     else
-     {
-         cout << "No subscription found with ID " << ID << ".\n";
-     }
-     cout << "=========================== End of Subscription Details =====================\n";
- }
- 
- void storage::update_sub(int ID)
- {
-     auto found_sub = find(subs, ID);
- 
-     if (found_sub.has_value())
-     {
-         string name_inp, desc_inp, price_inp;
-         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
- 
-         cout << "Press enter to keep the current value unchanged." << endl;
-         cout << "-----------------------------------------------------" << endl;
-         cout << "Update subscription name  (" << found_sub.value().name << ") : ";
-         getline(cin, name_inp);
- 
-         cout << "Update subscription price (" << found_sub.value().price << ") : ";
-         getline(cin, price_inp);
- 
-         while (!price_inp.empty())
-         {
- 
-             if (regex_match(price_inp, regex("[+-]?([0-9]*[.])?[0-9]+")))
-             {
-                 break;
-             }
-             else
-             {
-                 cout << "Invalid input. Please enter a valid price : ";
-                 cin.clear();
-                 getline(cin, price_inp);
-             }
-         }
- 
-         cout << "Update subscription description (" << found_sub.value().description << ") : ";
-         getline(cin, desc_inp);
-         cout << endl;
-         cout << "-----------------------------------------------------" << endl;
- 
-         for (subscription &sub : subs)
-         {
-             if (sub.ID == ID)
-             {
-                 sub.name = name_inp.empty() ? found_sub->name : name_inp;
-                 sub.price = price_inp.empty() ? found_sub->price : stod(price_inp);
-                 sub.description = desc_inp.empty() ? found_sub->description : desc_inp;
-             }
-         }
-         cout << "Subscription with ID " << ID << " updated successfully." << endl;
-     }
-     else
-     {
-         cout << "Subscription with ID " << ID << " not found." << endl;
-     }
- }
- 
+void storage::search()
+{
+    string author, title, is_sellable_inp, is_sellable;
+    bool query_condition = true;
+
+    do
+    {
+        cout << "Press enter to keep the current value unchanged." << endl;
+        cout << "-----------------------------------------------------" << endl;
+        cout << "Enter the title : ";
+        getline(cin, title);
+        cout << "Enter the author : ";
+        getline(cin, author);
+        cout << "Is the book for sell (yes/no) : ";
+        getline(cin, is_sellable_inp);
+
+        title = title.empty() ? "" : title;
+        author = author.empty() ? "" : author;
+
+    } while (author == "" && title == "");
+    bool found = false;
+
+    for (auto book : books)
+    {
+        query_condition = true;
+
+        if (!title.empty())
+        {
+            query_condition = query_condition && regex_search_pattern(book.title, title);
+        }
+
+        if (!author.empty())
+        {
+            query_condition = query_condition && regex_search_pattern(book.author, author);
+        }
+
+        if (is_sellable_inp == "yes")
+        {
+            query_condition = query_condition && (book.is_sellable == true);
+        }
+
+        if (is_sellable_inp == "no")
+        {
+            query_condition = query_condition && (book.is_sellable == false);
+        }
+
+        if (query_condition)
+        {
+            cout << "================ Books Found ================" << endl;
+            cout << book << endl;
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        cout << "No books match the given criteria." << endl;
+    }
+}
+
+void storage::show_sub(int ID)
+{
+    cout << "=========================== Subscription Details ===========================\n";
+    auto found_sub = find(subs, ID);
+    if (found_sub.has_value())
+    {
+        cout << "------------------- Subscription " << ID << "----------------------\n";
+        cout << found_sub.value() << endl;
+    }
+    else
+    {
+        cout << "No subscription found with ID " << ID << ".\n";
+    }
+    cout << "=========================== End of Subscription Details =====================\n";
+}
+
+void storage::update_sub(int ID)
+{
+    auto found_sub = find(subs, ID);
+
+    if (found_sub.has_value())
+    {
+        string name_inp, desc_inp, price_inp;
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        cout << "Press enter to keep the current value unchanged." << endl;
+        cout << "-----------------------------------------------------" << endl;
+        cout << "Update subscription name  (" << found_sub.value().name << ") : ";
+        getline(cin, name_inp);
+
+        cout << "Update subscription price (" << found_sub.value().price << ") : ";
+        getline(cin, price_inp);
+
+        while (!price_inp.empty())
+        {
+
+            if (regex_match(price_inp, regex("[+-]?([0-9]*[.])?[0-9]+")))
+            {
+                break;
+            }
+            else
+            {
+                cout << "Invalid input. Please enter a valid price : ";
+                cin.clear();
+                getline(cin, price_inp);
+            }
+        }
+
+        cout << "Update subscription description (" << found_sub.value().description << ") : ";
+        getline(cin, desc_inp);
+        cout << endl;
+        cout << "-----------------------------------------------------" << endl;
+
+        for (subscription &sub : subs)
+        {
+            if (sub.ID == ID)
+            {
+                sub.name = name_inp.empty() ? found_sub->name : name_inp;
+                sub.price = price_inp.empty() ? found_sub->price : stod(price_inp);
+                sub.description = desc_inp.empty() ? found_sub->description : desc_inp;
+            }
+        }
+        cout << "Subscription with ID " << ID << " updated successfully." << endl;
+    }
+    else
+    {
+        cout << "Subscription with ID " << ID << " not found." << endl;
+    }
+}
+
 void storage::delete_sub(int ID)
 {
     auto found_sub = find(subs, ID);
@@ -419,75 +419,74 @@ void storage::buy_book()
 {
     int book_id, user_id, role_inp, quantity_inp;
     bool is_active_bool = true;
-while (true)
-{
-    cout << "Enter the role (member 1 - buyer 0): ";
-    if (cin.peek() == '\n')
+    while (true)
     {
-        cout << "Invalid input. Role cannot be empty." << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-    else if (!(cin >> role_inp))
-    {
-        cout << "Invalid input. Please enter a valid integer for role." << endl;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-    else
-    {
+        cout << "Enter the role (member 1 - buyer 0): ";
+        if (cin.peek() == '\n')
+        {
+            cout << "Invalid input. Role cannot be empty." << endl;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else if (!(cin >> role_inp))
+        {
+            cout << "Invalid input. Please enter a valid integer for role." << endl;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+        {
 
-        break;
+            break;
+        }
     }
-}
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (role_inp == 1)
     {
         bool is_found = true;
-    do
-    {
-        cout << "Enter the member ID: ";
-        
-        if (cin.peek() == '\n')
+        do
         {
-            cout << "Invalid input. Member ID cannot be empty." << endl;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            is_found = false;  // Set flag to false to repeat the loop
-        }
-        else if (!(cin >> user_id))
-        {
-            cout << "Invalid input. Please enter a valid integer for member ID." << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            is_found = false;  // Set flag to false to repeat the loop
-        }
-        else
-        {
-            // Clear any remaining characters in the input buffer
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Enter the member ID: ";
 
-            auto found_member = find_user_pointers(users, user_id);
-
-            if (!found_member.has_value())
+            if (cin.peek() == '\n')
             {
-                is_found = false;
+                cout << "Invalid input. Member ID cannot be empty." << endl;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                is_found = false; // Set flag to false to repeat the loop
+            }
+            else if (!(cin >> user_id))
+            {
+                cout << "Invalid input. Please enter a valid integer for member ID." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                is_found = false; // Set flag to false to repeat the loop
             }
             else
             {
-                is_active_bool = check_member_active(found_member);
+                // Clear any remaining characters in the input buffer
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                auto found_member = find_user_pointers(users, user_id);
+
+                if (!found_member.has_value())
+                {
+                    is_found = false;
+                }
+                else
+                {
+                    is_active_bool = check_member_active(found_member);
+                }
             }
-        }
-    } while (!is_found);
+        } while (!is_found);
     }
     else
     {
         user user_instance;
         user_instance = add_user("buyer");
         user_id = add_new_user_row(user_instance);
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-   while (true)
+    while (true)
     {
         cout << "Enter the book ID: ";
         if (cin.peek() == '\n')
@@ -654,8 +653,6 @@ void storage::update_sale(int ID)
         cout << "Press enter to keep the current value unchanged." << endl;
         cout << "-----------------------------------------------------" << endl;
         cout << "Update ID_book  (" << found_sale.value().ID_book << ") : ";
-
-        // Input validation for ID_book
         do
         {
             getline(cin >> ws, ID_book_inp);
@@ -664,8 +661,11 @@ void storage::update_sale(int ID)
             {
                 cout << "Invalid input. Please enter a valid integer for ID_book: ";
             }
-        } while (!ID_book_inp.empty() && !regex_match(ID_book_inp, regex("\\d+")));
-
+            else if (!ID_book_inp.empty() && !find(books, stoi(ID_book_inp)).has_value())
+            {
+                cout << "Book with ID " << ID_book_inp << " does not exist. Please re-enter: ";
+            }
+        } while (!ID_book_inp.empty() && (!regex_match(ID_book_inp, regex("\\d+")) || !find(books, stoi(ID_book_inp)).has_value()));
         cout << "Update ID_buyer (" << found_sale.value().ID_buyer << ") : ";
 
         // Input validation for ID_buyer
@@ -677,7 +677,13 @@ void storage::update_sale(int ID)
             {
                 cout << "Invalid input. Please enter a valid integer for ID_buyer: ";
             }
-        } while (!ID_buyer_inp.empty() && !regex_match(ID_buyer_inp, regex("\\d+")));
+            else if (!ID_buyer_inp.empty() && !find_user_pointers(users, stoi(ID_buyer_inp)).has_value())
+            {
+                cout << "Buyer with ID " << ID_buyer_inp << " does not exist. Please re-enter: ";
+            }
+        } while (!ID_buyer_inp.empty() && (!regex_match(ID_buyer_inp, regex("\\d+")) || !find_user_pointers(users, stoi(ID_buyer_inp)).has_value()));
+
+        cout << "Update price (" << found_sale.value().price << ") : ";
 
         cout << "Update price (" << found_sale.value().price << ") : ";
 
@@ -706,23 +712,24 @@ void storage::update_sale(int ID)
         } while (!quantity_inp.empty() && !regex_match(quantity_inp, regex("[+-]?([0-9]*[.])?[0-9]+")));
 
         // If the user provided a new ID_book, adjust the corresponding book's available copies
-        if (!ID_book_inp.empty())
-        {
-            for (book &b : books)
-            {
-                if (b.ID == found_sale.value().ID_book)
-                {
-                    b.available_copies += found_sale.value().quantity; // Increase old book's available copies
-                    break;
-                }
-            }
-        }
+        // if (!ID_book_inp.empty())
+        // {
+        //     for (book &b : books)
+        //     {
+        //         if (b.ID == found_sale.value().ID_book)
+        //         {
+        //             b.available_copies += found_sale.value().quantity; // Increase old book's available copies
+        //             break;
+        //         }
+        //     }
+        // }
 
         // Update sale information
         for (buy_history &sale : sales)
         {
             if (sale.ID == ID)
             {
+
                 // Update ID_book if provided, otherwise keep the current value
                 sale.ID_book = ID_book_inp.empty() ? found_sale->ID_book : stoi(ID_book_inp);
 
@@ -733,9 +740,18 @@ void storage::update_sale(int ID)
                 sale.price = price_inp.empty() ? found_sale->price : stof(price_inp);
 
                 // Update quantity if provided, otherwise keep the current value
-                sale.quantity += quantity_inp.empty() ? found_sale->quantity : stof(quantity_inp);
-
-               
+                sale.quantity = quantity_inp.empty() ? found_sale->quantity : stof(quantity_inp);
+                for (book &b : books)
+                {
+                    if (b.ID == found_sale.value().ID_book)
+                    {
+                        b.available_copies -= stof(quantity_inp); // Decrease old book's available copies
+                    }
+                    else if (b.ID == stoi(ID_book_inp))
+                    {
+                        b.available_copies += sale.quantity; // Increase new book's available copies
+                    }
+                }
 
                 break;
             }
@@ -771,7 +787,7 @@ void storage::borrow_book()
             cout << "Invalid input. Book ID cannot be empty." << endl;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
-        else if (!(cin >> book_id) )
+        else if (!(cin >> book_id))
         {
             cout << "Invalid input. Please enter a valid  integer for book ID." << endl;
             cin.clear();
@@ -782,6 +798,8 @@ void storage::borrow_book()
             break;
         }
     }
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     while (true)
     {
         cout << "Enter the member ID: ";
@@ -798,16 +816,15 @@ void storage::borrow_book()
         }
         else
         {
+
             break;
         }
     }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     auto foundBook = find(books, book_id);
     auto found_user = find_user_pointers(users, user_id);
-    if (found_user.has_value() && found_user.value()->role == "member"
-     && check_member_active(found_user) == true && foundBook.has_value()
-      && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0
-       && get_count_borrowed(user_id) < 3)
+    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0 && get_count_borrowed(user_id) < 3)
     {
         for (book &book : books)
         {
@@ -974,9 +991,11 @@ void storage::update_user(int ID)
                     bool is_active;
                     if (!is_active_inp.empty())
                     {
-                        is_active=is_active_inp == "1"? true : false;
-                    }else{
-                        is_active=check_member_active(found_user);
+                        is_active = is_active_inp == "1" ? true : false;
+                    }
+                    else
+                    {
+                        is_active = check_member_active(found_user);
                     }
 
                     update_member_active(found_user, is_active);
@@ -1150,7 +1169,7 @@ void storage::renew_subscription(int ID)
     auto found_member = find_user_pointers(users, ID);
     if (found_member.has_value())
     {
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (found_member.value()->role == "member" && check_member_active(found_member) == false)
         {
