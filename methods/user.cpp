@@ -32,7 +32,8 @@ member::member(user &m, bool b) : buyer(m), is_active(b){};
 void member::output()
 {
     user::output();
-    cout << "is active : " << is_active << endl;
+    cout << "is active : "  ;
+    is_active==1 ? cout << "yes" : cout << "no" << endl;
 }
 
 bool member::get_is_active()
@@ -53,17 +54,21 @@ void admin::login()
     
     while (true)
     {
-        cout << "Username: ";
-        cin >> username_inp;
-        cout << "Password: ";
-        cin >> password_inp;
+        cout << "Enter your username: ";
+        getline(cin, username_inp);
+        cout << "Enter your password: ";
+        getline(cin, password_inp);
 
         if (username == username_inp && password == password_inp)
         {
+            cout << "Login successful. Welcome, " << username << "!" << endl;
             break;
         }
 
-        cout << "Error in credentials, please reenter them." << endl;
+        cout << "Incorrect credentials. Please reenter your username and password." << endl;
+        
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 

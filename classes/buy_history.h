@@ -22,6 +22,6 @@ private:
 
 public:
     static int sale_id;
-    buy_history(int, int, double, int);
+    buy_history(int , int , double , int );
     void show_sale();
 };
