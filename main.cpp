@@ -45,8 +45,6 @@ int main()
         cout << "14. Show User" << endl;
         cout << "15. Update User" << endl;
 
-       
-
         cout << "===== Subscription History Management =====" << endl;
 
         cout << "16. Show All Subscription History" << endl;
@@ -55,7 +53,7 @@ int main()
         cout << "29. Update Subscription History" << endl;
 
         // cout << "===== Borrow Management =====" << endl;
-        
+
         // cout << "16. Add a Borrow" << endl;
         // cout << "17. Show Current Borrow Count of a User" << endl;
         // cout << "18. Show All Borrows" << endl;
@@ -68,9 +66,17 @@ int main()
         cout << "24. Update Sale" << endl;
         cout << "0. Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
-        cin.ignore();
+        // cin >> choice;
+        // cin.ignore();
 
+        while (cin.peek() == '\n' || !(cin >> choice))
+        {
+            cout << "Invalid input. Please enter a valid numeric choice : ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+
+        cin.ignore();
         switch (choice)
         {
         case 1:
@@ -211,7 +217,7 @@ int main()
             cout << "Invalid choice. Please try again." << endl;
             break;
         }
-         
+
     } while (choice != 0);
     // storage_instance.check_to_change_is_active();
 
