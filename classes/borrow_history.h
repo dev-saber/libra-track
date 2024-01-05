@@ -4,6 +4,8 @@
 class borrow_history
 {
     friend class storage;
+    template <class V, class I>
+    friend optional<V> find(vector<V> vector, I ID);
     friend ostream& operator<<(ostream& o, const borrow_history& bh);
 private:
     int ID;

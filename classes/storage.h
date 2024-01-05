@@ -45,8 +45,9 @@ public:
     void update_user(int);
     void show_user(int);
 
-    int get_count_borrowed(int);
+    int get_count_borrowed(int, bool );
     void show_all_borrowed();
+    void return_a_borrow(int);
     void check_to_change_is_active();
 
     void show_sub(int);

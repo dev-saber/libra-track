@@ -412,6 +412,8 @@ int storage::add_new_user_row(user &u)
         users.push_back(new buyer(u));
     }
     user::user_id++;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // try removing it
     return user::user_id - 1;
 }
 
@@ -799,17 +801,29 @@ void storage::update_sale(int ID)
     }
 }
 
-int storage::get_count_borrowed(int ID)
+int storage::get_count_borrowed(int ID, bool printOutput)
 {
     int counter = 0;
+    // cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    if (printOutput)
+    {
+        cout << "===== Borrow History for Member ID " << ID << " =====" << endl;
+    }
 
     for (borrow_history &b : borrows)
     {
         if (b.ID_member == ID && !b.is_returned)
         {
+            if (printOutput)
+            {
+                cout << b << endl;
+            }
             counter += 1;
         }
     }
+
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     return counter;
 }
@@ -829,7 +843,7 @@ void storage::borrow_book()
         }
         else if (!(cin >> book_id))
         {
-            cout << "Invalid input. Please enter a valid  integer for book ID." << endl;
+            cout << "Invalid input. Please enter a valid integer for book ID." << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -838,7 +852,8 @@ void storage::borrow_book()
             break;
         }
     }
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the newline character
 
     while (true)
     {
@@ -856,15 +871,14 @@ void storage::borrow_book()
         }
         else
         {
-
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the newline character
             break;
         }
     }
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     auto foundBook = find(books, book_id);
     auto found_user = find_user_pointers(users, user_id);
-    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0 && get_count_borrowed(user_id) < 3)
+    if (found_user.has_value() && found_user.value()->role == "member" && check_member_active(found_user) == true && foundBook.has_value() && (foundBook.value().is_sellable == false) && foundBook.value().available_copies > 0 && get_count_borrowed(user_id, false) < 3)
     {
         for (book &book : books)
         {
@@ -1087,40 +1101,67 @@ void storage::add_sub()
 {
     subscription s;
     string name, desc;
+
     do
     {
-
         cout << "Enter a subscription name: ";
         getline(cin, name);
+
+        if (name.empty())
+        {
+            cout << "Invalid input. Subscription name cannot be empty." << endl;
+            continue;
+        }
+
         s.name = name;
-    } while (name.empty());
+        break;
+    } while (true);
 
     while (true)
     {
+        cout << "Enter the subscription price: ";
 
-        cout << "Enter the subscription price : ";
-        string price_input;
-        cin >> price_input;
-
-        if (regex_match(price_input, regex("[+-]?([0-9]*[.])?[0-9]+")))
+        // Check if the next character is '\n' (empty input)
+        if (cin.peek() == '\n')
         {
-            s.price = stof(price_input);
-            break;
+            cout << "Invalid input. Please enter a valid Price: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         else
         {
-            cout << "Invalid input. Please enter a valid Price";
-            cin.clear();
+            string price_input;
+            cin >> price_input;
+
+            if (!regex_match(price_input, regex("[+-]?([0-9]*[.])?[0-9]+")))
+            {
+                cout << "Invalid input. Please enter a valid Price: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            else
+            {
+                s.price = stof(price_input);
+                break;
+            }
         }
     }
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     do
     {
         cout << "Enter a subscription description: ";
         getline(cin, desc);
+
+        if (desc.empty())
+        {
+            cout << "Invalid input. Subscription description cannot be empty." << endl;
+            continue;
+        }
+
         s.description = desc;
-    } while (desc.empty());
+        break;
+    } while (true);
 
     s.ID = subscription::subsc_ids;
     subscription::subsc_ids++;
@@ -1248,4 +1289,75 @@ void storage::show_user(int ID)
 
 void storage::update_sub_history(int ID)
 {
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    auto found_record = find(subs_history, ID);
+    if (found_record.has_value() && found_record.value().end_date >= time(0))
+    {
+        string member_inp, sub_inp;
+        cout << "Press enter to keep the current value unchanged." << endl;
+        cout << "-----------------------------------------------------" << endl;
+        cout << "Update subscription category ID (" << found_record.value().ID_subscription << "): ";
+        getline(cin, sub_inp);
+        if (!sub_inp.empty())
+        {
+            auto found_sub = find(subs, stoi(sub_inp));
+            while (!found_sub.has_value())
+            {
+                cout << "Invalid subscription ID, try again: ";
+                getline(cin, sub_inp);
+                found_sub = find(subs, stoi(sub_inp));
+            }
+        }
+        cout << "Update subscription member ID (" << found_record.value().ID_member << "): ";
+        getline(cin, member_inp);
+
+        if (!member_inp.empty())
+        {
+            auto found_user = find_user_pointers(users, stoi(member_inp));
+            while (!found_user.has_value() || found_user.value()->role != "member")
+            {
+                cout << "Invalid member ID, try again: ";
+                getline(cin, member_inp);
+                found_user = find_user_pointers(users, stoi(member_inp));
+            }
+        }
+
+        for (subscription_history &sh : subs_history)
+        {
+            if (sh.ID == ID)
+            {
+                sh.ID_subscription = sub_inp.empty() ? sh.ID_subscription : stoi(sub_inp);
+                sh.ID_member = member_inp.empty() ? sh.ID_member : stoi(member_inp);
+            }
+        }
+        cout << "Subscription history updated successfully!" << endl;
+    }
+    else
+    {
+        cout << "No record with that given ID" << endl;
+    }
+}
+
+void storage::return_a_borrow(int ID)
+{
+    auto found_borrow = find(borrows, ID);
+    if (found_borrow.has_value())
+    {
+        for (borrow_history &b : borrows)
+        {
+            if (b.ID == ID)
+            {
+                b.is_returned = true;
+                b.return_date = time(0);
+            }
+        }
+        for (book &b : books)
+        {
+            if (b.ID == found_borrow.value().ID_book)
+            {
+                b.available_copies++;
+            }
+        }
+    }
 }
